@@ -1,6 +1,16 @@
 # event-driven-automation
 Curso para Semana de Capacitação 11 - NIC.br
 
+CONTAINERLAB:
+
+- containerlab deploy -t lab02.yml
+
+- containerlab destroy -t topo-xrv9k.yml --cleanup
+
+- containerlab destroy -a --yes
+
+-containerlab inspect --all
+
 NGINX:
 
 - Criar Pasta Certs dentro de nginx
