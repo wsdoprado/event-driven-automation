@@ -9,7 +9,7 @@ CONTAINERLAB:
 
 - containerlab destroy -a --yes
 
--containerlab inspect --all
+- containerlab inspect --all
 
 NGINX:
 
