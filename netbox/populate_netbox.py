@@ -73,10 +73,10 @@ for r in regions:
 
 # Criar sites em cada região
 sites = [
-    {"name": "POP-SP", "slug": "sp-site", "region": "sp"},
-    {"name": "POP-RJ", "slug": "rj-site", "region": "rj"},
-    {"name": "POP-CE", "slug": "ce-site", "region": "ce"},
-    {"name": "POP-MG", "slug": "mg-site", "region": "mg"}
+    {"name": "POP-SP", "slug": "pop-sp", "region": "sp"},
+    {"name": "POP-RJ", "slug": "pop-rj", "region": "rj"},
+    {"name": "POP-CE", "slug": "pop-ce", "region": "ce"},
+    {"name": "POP-MG", "slug": "pop-mg", "region": "mg"}
 ]
 
 # Criar sites
@@ -115,8 +115,8 @@ for r in roles:
 
 # Criar tenants: Producao e Laboratorio
 tenants = [
-    {"name": "Producao", "slug": "producao"},
-    {"name": "Laboratorio", "slug": "laboratorio"},
+    {"name": "produção", "slug": "produção"},
+    {"name": "laboratorio", "slug": "laboratorio"},
 ]
 
 tenant_ids = {}
