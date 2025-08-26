@@ -14,4 +14,11 @@ dependencies = [
     "requests>=2.32.5",
     "temporalio>=1.16.0",
     "uvicorn>=0.35.0",
+    "napalm>=5.1.0",
+    "netmiko>=4.6.0",
+    "nornir>=3.5.0",
+    "nornir_napalm>=0.5.0",
+    "nornir-netbox>=0.3.0",
+    "nornir-netmiko>=1.0.1",
+    "nornir-utils>=0.2.0",
 ]
