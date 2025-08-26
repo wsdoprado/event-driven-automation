@@ -1,0 +1,17 @@
+[project]
+name = "event-driven-automation"
+version = "0.1.0"
+description = "Curso para Semana de Capacitação 11 - NIC.br"
+authors = [
+    { name = "Adilson Torres", email = "adilson@nic.br" },
+    { name = "William Prado", email = "wsprado@nic.br" }
+]
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "fastapi>=0.116.1",
+    "requests>=2.32.5",
+    "temporalio>=1.16.0",
+    "uvicorn>=0.35.0",
+]
