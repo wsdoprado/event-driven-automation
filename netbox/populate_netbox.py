@@ -1,0 +1,252 @@
+import os, requests, urllib3
+from dotenv import load_dotenv
+import pynetbox
+
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
+
+urllib3.disable_warnings()
+
+NETBOX_URL = os.getenv("NETBOX_URL")
+NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
+
+if not NETBOX_URL or not NETBOX_TOKEN:
+    raise ValueError("Por favor, configure as variáveis NETBOX_URL e NETBOX_TOKEN no .env")
+
+# Criar uma sessão personalizada
+session = requests.Session()
+session.verify = False  # Desabilitar a verificação SSL
+
+# Conectar à API do NetBox
+nb = pynetbox.api(NETBOX_URL, token=NETBOX_TOKEN, )
+
+nb.http_session = session
+
+# Criar fabricantes
+manufacturers = [
+    {"name": "Cisco", "slug": "cisco"},
+    {"name": "Arista", "slug": "arista"}
+]
+
+manufacturer_ids = {}
+for m in manufacturers:
+    manufacturer = nb.dcim.manufacturers.get(slug=m["slug"])
+    if manufacturer:
+        print(f"✅ Fabricante já existe: {manufacturer.name} (ID {manufacturer.id})")
+    else:
+        manufacturer = nb.dcim.manufacturers.create(**m)
+        print(f"🆕 Fabricante criado: {manufacturer.name} (ID {manufacturer.id})")
+    manufacturer_ids[m["slug"]] = manufacturer.id
+
+# Criar plataformas
+platforms = [
+    {"name": "Cisco IOS", "slug": "cisco-ios"},
+    {"name": "Arista EOS", "slug": "arista-eos"}
+]
+
+platform_ids = {}
+for p in platforms:
+    platform = nb.dcim.platforms.get(slug=p["slug"])
+    if platform:
+        print(f"✅ Plataforma já existe: {platform.name} (ID {platform.id})")
+    else:
+        platform = nb.dcim.platforms.create(**p)
+        print(f"🆕 Plataforma criada: {platform.name} (ID {platform.id})")
+    platform_ids[p["slug"]] = platform.id
+
+# Criar regioes
+regions = [
+    {"name": "Sao Paulo", "slug": "sp"},
+    {"name": "Rio de Janeiro", "slug": "rj"},
+    {"name": "Fortaleza", "slug": "ce"},
+    {"name": "Belo Horizonte", "slug": "mg"}
+]
+
+# Criar regiões
+for r in regions:
+    region = nb.dcim.regions.get(slug=r["slug"])
+    if region:
+        print(f"✅ Região já existe: {region.name} (ID {region.id})")
+    else:
+        region = nb.dcim.regions.create(**r)
+        print(f"🆕 Região criada: {region.name} (ID {region.id})")
+
+# Criar sites em cada região
+sites = [
+    {"name": "POP-SP", "slug": "sp-site", "region": "sp"},
+    {"name": "POP-RJ", "slug": "rj-site", "region": "rj"},
+    {"name": "POP-CE", "slug": "ce-site", "region": "ce"},
+    {"name": "POP-MG", "slug": "mg-site", "region": "mg"}
+]
+
+# Criar sites
+for site_data in sites:
+    region = nb.dcim.regions.get(slug=site_data["region"])
+    if region:
+        site = nb.dcim.sites.get(slug=site_data["slug"])
+        if site:
+            print(f"✅ Site já existe: {site.name} (ID {site.id})")
+        else:
+            site = nb.dcim.sites.create(
+                name=site_data["name"],
+                slug=site_data["slug"],
+                region=region.id
+            )
+            print(f"🆕 Site criado: {site.name} (ID {site.id})")
+    else:
+        print(f"❌ Região {site_data['region']} não encontrada. Site {site_data['name']} não criado.")
+     
+# Criar roles: P, PE e L2
+roles = [
+    {"name": "P", "slug": "p", "color": "ff0000"},
+    {"name": "PE", "slug": "pe", "color": "0000ff"},
+    {"name": "L2", "slug": "l2", "color": "00ff00"},
+]        
+
+role_ids = {}
+for r in roles:
+    role = nb.dcim.device_roles.get(slug=r["slug"])
+    if role:
+        print(f"✅ Role já existe: {role.name} (ID {role.id})")
+    else:
+        role = nb.dcim.device_roles.create(**r)
+        print(f"🆕 Role criado: {role.name} (ID {role.id})")
+    role_ids[r["slug"]] = role.id
+
+# Criar tenants: Producao e Laboratorio
+tenants = [
+    {"name": "Producao", "slug": "producao"},
+    {"name": "Laboratorio", "slug": "laboratorio"},
+]
+
+tenant_ids = {}
+for t in tenants:
+    tenant = nb.tenancy.tenants.get(slug=t["slug"])
+    if tenant:
+        print(f"✅ Tenant já existe: {tenant.name} (ID {tenant.id})")
+    else:
+        tenant = nb.tenancy.tenants.create(**t)
+        print(f"🆕 Tenant criado: {tenant.name} (ID {tenant.id})")
+    tenant_ids[t["slug"]] = tenant.id
+                
+# Criar tipos de dispositivos com interfaces
+device_types = [
+    {
+        "manufacturer": manufacturer_ids["cisco"],
+        "model": "Cisco IOS",
+        "slug": "cisco-ios",
+        "u_height": 1,
+        "interfaces": [
+            {"name": "Ethernet0/1", "type": "1000base-t"},
+            {"name": "Ethernet0/2", "type": "1000base-t"},
+            {"name": "Ethernet0/3", "type": "1000base-t"},
+            {"name": "Ethernet0/0", "type": "1000base-t", "mgmt_only": True}
+        ]
+    },
+    {
+        "manufacturer": manufacturer_ids["arista"],
+        "model": "Arista CEOS",
+        "slug": "arista-ceos",
+        "u_height": 1,
+        "interfaces": [
+            {"name": "Ethernet1", "type": "1000base-t"},
+            {"name": "Ethernet2", "type": "1000base-t"},
+            {"name": "Ethernet3", "type": "1000base-t"},
+            {"name": "Ethernet4", "type": "1000base-t"},
+            {"name": "Management0", "type": "1000base-t", "mgmt_only": True}
+        ]
+    }
+]
+
+# Criar tipos de dispositivos com interfaces
+for dt in device_types:
+    device_type = nb.dcim.device_types.get(slug=dt["slug"])
+    if device_type:
+        print(f"✅ Device Type já existe: {device_type.model} (ID {device_type.id})")
+    else:
+        device_type = nb.dcim.device_types.create(
+            manufacturer=dt["manufacturer"],
+            model=dt["model"],
+            slug=dt["slug"],
+            u_height=dt["u_height"],
+        )
+        print(f"🆕 Device Type criado: {device_type.model} (ID {device_type.id})")
+
+    # Criar interface templates (se não existirem ainda)
+    for iface in dt["interfaces"]:
+        existing_ifaces = nb.dcim.interface_templates.filter(
+            device_type_id=device_type.id,
+            name=iface["name"]
+        )
+        if existing_ifaces:
+            print(f"   ✅ Interface template já existe: {iface['name']}")
+        else:
+            iface_template = nb.dcim.interface_templates.create(
+                device_type=device_type.id,
+                name=iface["name"],
+                type=iface["type"],
+                mgmt_only=iface.get("mgmt_only", False)
+            )
+            print(f"   🆕 Interface template criada: {iface_template.name}")
+
+# Devices + IPs de gerência
+devices_to_create = [
+    {"name": "cisco-r1", "slug": "cisco-ios", "site": "sp-site", "role": "l2", "mgmt_ip": "192.168.100.121/24", "tenant": "producao"},
+    {"name": "cisco-r2", "slug": "cisco-ios", "site": "rj-site", "role": "l2", "mgmt_ip": "192.168.100.122/24", "tenant": "producao"},
+    {"name": "arista-r1", "slug": "arista-ceos", "site": "sp-site", "role": "pe", "mgmt_ip": "192.168.100.101/24", "tenant": "producao"},
+    {"name": "arista-r2", "slug": "arista-ceos", "site": "rj-site", "role": "pe", "mgmt_ip": "192.168.100.102/24", "tenant": "producao"},
+    {"name": "arista-r3", "slug": "arista-ceos", "site": "ce-site", "role": "pe", "mgmt_ip": "192.168.100.103/24", "tenant": "producao"},
+    {"name": "arista-r4", "slug": "arista-ceos", "site": "mg-site", "role": "pe", "mgmt_ip": "192.168.100.104/24", "tenant": "producao"},
+    {"name": "arista-r5", "slug": "arista-ceos", "site": "sp-site", "role": "pe", "mgmt_ip": "192.168.100.105/24", "tenant": "producao"},
+]
+
+for dev in devices_to_create:
+    site = nb.dcim.sites.get(slug=dev["site"])
+    device_type = nb.dcim.device_types.get(slug=dev["slug"])
+    platform = nb.dcim.platforms.get(slug=dev["slug"])
+    role_id = role_ids[dev["role"]]
+    tenant_id = tenant_ids[dev["tenant"]]
+
+    if not site or not device_type:
+        print(f"❌ Erro: Site {dev['site']} ou DeviceType {dev['slug']} não encontrado.")
+        continue
+
+    # Criar ou buscar device
+    device = nb.dcim.devices.get(name=dev["name"])
+    if device:
+        print(f"✅ Device já existe: {device.name} (ID {device.id})")
+    else:
+        device = nb.dcim.devices.create(
+            name=dev["name"],
+            device_type=device_type.id,
+            site=site.id,
+            platform=platform.id if platform else None,
+            status="active",
+            role=role_id,
+            tenant=tenant_id
+        )
+        print(f"🆕 Device criado: {device.name} (ID {device.id})")
+
+    # Determinar interface de gerenciamento
+    mgmt_iface_name = "Ethernet0/0" if "cisco" in dev["slug"] else "Management0"
+    mgmt_iface = nb.dcim.interfaces.get(device_id=device.id, name=mgmt_iface_name)
+    if not mgmt_iface:
+        print(f"❌ Interface de gerenciamento {mgmt_iface_name} não encontrada no device {device.name}")
+        continue
+
+    # Criar ou buscar IP de gerenciamento
+    ip = nb.ipam.ip_addresses.get(address=dev["mgmt_ip"])
+    if not ip:
+        ip = nb.ipam.ip_addresses.create(
+            address=dev["mgmt_ip"],
+            assigned_object_type="dcim.interface",
+            assigned_object_id=mgmt_iface.id,
+            status="active"
+        )
+        print(f"🆕 IP {ip.address} associado a {device.name}:{mgmt_iface.name}")
+    else:
+        print(f"✅ IP {ip.address} já existe")
+
+    # Marcar como IP principal do device
+    device.update({"primary_ip4": ip.id})
+    print(f"✅ IP {ip.address} marcado como IP principal do device {device.name}")
