@@ -131,7 +131,7 @@ docker compose pull
 docker compose up --build -d
 ```
 
-A interface do Temporal (Temporal UI) estará disponível em 👉 http://localhost:3000
+A interface do Temporal (Temporal UI) estará disponível em 👉 http://localhost:8080
 
 Execução do worker (lembrando de está no ambiente virtual python)
 
