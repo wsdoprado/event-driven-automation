@@ -120,6 +120,23 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -subj "/CN=localhost"
 ```
 
+🖥️ Iniciando os Exercícios de Automação de Rede
+Criar um arquivo .env na raiz do projeto
+```bash
+# Arquivo: .env
+# URL do NetBox (ex.: http://localhost:8000)
+NETBOX_URL=http://localhost:8000
+
+# Token de API do NetBox
+NETBOX_TOKEN=seu_token_aqui
+
+# Usuário SSH dos dispositivos
+USER_DEVICE=admin
+
+# Senha SSH dos dispositivos
+PASSW_DEVICE=sua_senha_aqui
+```
+
 🧩 Temporal
 
 O Temporal será utilizado para orquestração das atividades.
