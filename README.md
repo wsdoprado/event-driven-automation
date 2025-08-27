@@ -78,6 +78,16 @@ docker compose pull
 docker compose up
 ```
 
+alterar o docker-compose.yml (depende de cada cenario)
+```bash
+start_period: 500s
+timeout: 30s
+interval: 30s
+retries: 5
+```
+
+
+
 O NetBox estará disponível em:
 👉 http://localhost:8000
 
