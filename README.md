@@ -4,6 +4,9 @@ Curso para Semana de Capacitação 11 - NIC.br
 CONTAINERLAB:
 
 imagens: https://drive.google.com/drive/folders/1uLDcgJuoxOE7c4ZD3WsPwLmvPrJKqeLE?usp=sharing
+- git clone https://github.com/hellt/vrnetlab.git
+
+- docker import cEOS64-lab-4.32.0F.tar.xz ceos:4.32.0F
 
 - containerlab deploy -t lab02.yml
 
