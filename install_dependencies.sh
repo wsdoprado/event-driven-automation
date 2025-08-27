@@ -17,6 +17,7 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+# Docker e Docker Compose
 sudo apt update -y
 sudo apt install -y docker-ce 
 sudo apt install -y docker-ce-cli 
@@ -27,4 +28,8 @@ sudo apt install -y curl
 docker --version
 docker compose version
 
+# Containerlab
 curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
+
+# uv
+curl -LsSf https://astral.sh/uv/install.sh | sh

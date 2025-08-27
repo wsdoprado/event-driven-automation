@@ -8,7 +8,7 @@ Este repositório contém os arquivos e instruções para o laboratório do curs
 
 Antes de começar, certifique-se de que o sistema possui:
 
-- **Linux (Debian 12 instalacao limpa)**
+- **Linux (Debian 12 instalação limpa)**
 - Acesso a Internet para Download de Arquivos 
   
 ## 🚀 Instalação das Dependências
@@ -51,6 +51,23 @@ Liste e inspecione laboratórios ativos:
 containerlab inspect --all
 ```
 
+🐍 Ambiente Python para execução dos scripts
+
+Para executar os scritps em python é necessário criar um ambiente virtual e instalar as dependências.
+```bash
+uv venv
+```
+```bash
+source .venv/bin/activate
+```
+```bash
+uv sync
+```
+
+Sair do ambiente virtual
+```bash
+deactivate
+```
 
 📦 NetBox (IPAM/DCIM)
 
@@ -86,8 +103,6 @@ interval: 30s
 retries: 5
 ```
 
-
-
 O NetBox estará disponível em:
 👉 http://localhost:8000
 
@@ -104,5 +119,33 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -out /opt/event-driven-automation/nginx/certs/fullchain.pem \
   -subj "/CN=localhost"
 ```
+
+🧩 Temporal
+
+O Temporal será utilizado para orquestração das atividades.
+Subir o Temporal
+```bash
+docker compose pull
+```
+```bash
+docker compose up --build -d
+```
+
+A interface do Temporal (Temporal UI) estará disponível em 👉 http://localhost:3000
+
+Execução do worker (lembrando de está no ambiente virtual python)
+
+```bash
+python -m workers.worker
+```
+
+Execução do client com a solicitação de workflow (lembrando de está no ambiente virtual python)
+
+```bash
+python client.py
+```
+
+
+
 
   
