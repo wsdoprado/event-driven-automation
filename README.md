@@ -3,6 +3,8 @@ Curso para Semana de Capacitação 11 - NIC.br
 
 CONTAINERLAB:
 
+imagens: https://drive.google.com/drive/folders/1uLDcgJuoxOE7c4ZD3WsPwLmvPrJKqeLE?usp=sharing
+
 - containerlab deploy -t lab02.yml
 
 - containerlab destroy -t topo-xrv9k.yml --cleanup
