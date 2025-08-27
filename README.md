@@ -38,12 +38,12 @@ docker import cEOS64-lab-4.32.0F.tar.xz ceos:4.32.0F
 
 Suba o laboratório de exemplo:
 ```bash
-containerlab deploy -t lab02.yml
+containerlab deploy -t lab-semanacap.yml
 ```
 
 Destrua um laboratório específico:
 ```bash
-containerlab destroy -t topo-xrv9k.yml --cleanup
+containerlab destroy -t lab-semanacap.yml --cleanup
 ```
 
 Liste e inspecione laboratórios ativos:
