@@ -22,6 +22,9 @@ sudo apt install -y docker-ce
 sudo apt install -y docker-ce-cli 
 sudo apt install -y containerd.io 
 sudo apt install -y docker-compose-plugin
+sudo apt install -y curl
 
 docker --version
 docker compose version
+
+curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
