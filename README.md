@@ -1,9 +1,16 @@
-# event-driven-automation
-Curso para Semana de Capacitação 11 - NIC.br
+# Curso - Semana de Capacitação 11 - NIC.br
 
-INSTALAR DEPENDENCIAS:
+Este repositório contém os arquivos e instruções para o laboratório do curso da Semana de Capacitação do NIC.br.
 
+---
+
+## 🚀 Instalação das Dependências
+
+Execute o script abaixo para instalar as dependências necessárias:
+
+```bash
 ./install_dependencies.sh
+```
 
 CONTAINERLAB:
 
