@@ -19,26 +19,38 @@ Execute o script abaixo para instalar as dependências necessárias:
 ./install_dependencies.sh
 ```
 
+
 🧪 Laboratórios com Containerlab
 
-Baixe as imagens necessárias:
+Baixe as imagens de Arista e Cisco IOS:
 📂 Google Drive - Imagens de Laboratório
  - https://drive.google.com/drive/folders/1uLDcgJuoxOE7c4ZD3WsPwLmvPrJKqeLE
 
 Clone o repositório vrnetlab:
-- git clone https://github.com/hellt/vrnetlab.git
+```bash
+git clone https://github.com/hellt/vrnetlab.git
+```
 
 Importe a imagem do Arista cEOS:
-- docker import cEOS64-lab-4.32.0F.tar.xz ceos:4.32.0F
+```bash
+docker import cEOS64-lab-4.32.0F.tar.xz ceos:4.32.0F
+```
 
 Suba o laboratório de exemplo:
-- containerlab deploy -t lab02.yml
+```bash
+containerlab deploy -t lab02.yml
+```
 
 Destrua um laboratório específico:
-- containerlab destroy -t topo-xrv9k.yml --cleanup
+```bash
+containerlab destroy -t topo-xrv9k.yml --cleanup
+```
 
 Liste e inspecione laboratórios ativos:
-- containerlab inspect --all
+```bash
+containerlab inspect --all
+```
+
 
 📦 NetBox (IPAM/DCIM)
 
