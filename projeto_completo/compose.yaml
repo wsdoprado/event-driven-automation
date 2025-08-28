@@ -1,0 +1,104 @@
+services:
+  postgresql:
+    container_name: temporal-postgresql
+    environment:
+      POSTGRES_PASSWORD: temporal
+      POSTGRES_USER: temporal
+    image: postgres:${POSTGRESQL_VERSION}
+    networks:
+      - temporal-network
+    expose:
+      - 5432
+    volumes:
+      - /var/lib/postgresql/data
+  temporal:
+    container_name: temporal
+    depends_on:
+      - postgresql
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgresql
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+      - ENABLE_ES=false
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CLI_ADDRESS=temporal:7233
+    image: temporalio/auto-setup:${TEMPORAL_VERSION}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "tctl",
+          "--address",
+          "temporal:7233",
+          "workflow",
+          "list"
+        ]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    networks:
+      - temporal-network
+    ports:
+      - 7233:7233
+    volumes:
+      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+  temporal-admin-tools:
+    container_name: temporal-admin-tools
+    depends_on:
+      - temporal
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CLI_ADDRESS=temporal:7233
+    image: temporalio/admin-tools:${TEMPORAL_ADMINTOOLS_VERSION}
+    networks:
+      - temporal-network
+    stdin_open: true
+    tty: true
+  temporal-ui:
+    container_name: temporal-ui
+    depends_on:
+      temporal:
+        condition: service_healthy
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+    image: temporalio/ui:${TEMPORAL_UI_VERSION}
+    networks:
+      - temporal-network
+    ports:
+      - "8080:8080"
+  worker:
+    build:
+      context: ./
+      additional_contexts:
+        uv_files: ../
+    command: python -m workers.worker
+    env_file:
+      - .env.dev
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+    depends_on:
+      temporal:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - temporal-network
+    deploy:
+      mode: replicated
+      replicas: 2
+  client-api:
+    build:
+      context: ./
+      additional_contexts:
+        uv_files: ../
+    command: uvicorn main:app --host 0.0.0.0 --port 9000
+    ports:
+      - "9000:9000"
+
+
+networks:
+  temporal-network:
+    driver: bridge
+    name: temporal-network
