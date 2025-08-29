@@ -85,25 +85,20 @@ deactivate
 
 O NetBox será utilizado como fonte de dados de rede.
 
-Clone o repositório oficial do NetBox com suporte a Docker:
 ```bash
 git clone -b release https://github.com/netbox-community/netbox-docker.git
-```
-
-```bash
+cd netbox-docker
 tee docker-compose.override.yml <<EOF
 services:
   netbox:
     ports:
       - 8000:8080
 EOF
-```
-
-```bash
 docker compose pull
 ```
 
 alterar o docker-compose.yml (depende de cada cenario)
+
 ```bash
 start_period: 500s
 timeout: 30s
