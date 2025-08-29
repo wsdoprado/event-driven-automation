@@ -32,6 +32,66 @@ Execute o script abaixo para instalar as dependências necessárias:
 ./install_dependencies.sh
 ```
 
+📦 NetBox (IPAM/DCIM)
+
+O NetBox será utilizado como fonte de dados de rede.
+
+```bash
+git clone -b release https://github.com/netbox-community/netbox-docker.git
+cd netbox-docker
+tee docker-compose.override.yml <<EOF
+services:
+  netbox:
+    ports:
+      - 8000:8080
+EOF
+docker compose pull
+```
+
+alterar o docker-compose.yml (depende de cada cenario)
+
+```bash
+start_period: 500s
+timeout: 30s
+interval: 30s
+retries: 5
+```
+
+```bash
+docker compose up ou docker compose up -d
+```
+```bash
+docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser
+```
+
+O NetBox estará disponível em:
+👉 http://localhost:8000
+
+🌐 Nginx (HTTPS Proxy)
+
+Crie a pasta para os certificados:
+```bash
+mkdir -p /opt/event-driven-automation/nginx/certs
+```
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /opt/event-driven-automation/nginx/certs/privkey.pem \
+  -out /opt/event-driven-automation/nginx/certs/fullchain.pem \
+  -subj "/CN=localhost"
+```
+
+Alterar IP Address em /opt/event-driven-automation/nginx/conf.d/default.conf
+
+```bash
+nano /opt/event-driven-automation/nginx/conf.d/default.conf
+```
+
+Subindo o container do NGINX
+```bash
+cd  /opt/event-driven-automation/nginx
+docker compose up ou docker compose -d
+```
 
 🧪 Laboratórios com Containerlab
 
@@ -94,67 +154,6 @@ uv sync
 Sair do ambiente virtual
 ```bash
 deactivate
-```
-
-📦 NetBox (IPAM/DCIM)
-
-O NetBox será utilizado como fonte de dados de rede.
-
-```bash
-git clone -b release https://github.com/netbox-community/netbox-docker.git
-cd netbox-docker
-tee docker-compose.override.yml <<EOF
-services:
-  netbox:
-    ports:
-      - 8000:8080
-EOF
-docker compose pull
-```
-
-alterar o docker-compose.yml (depende de cada cenario)
-
-```bash
-start_period: 500s
-timeout: 30s
-interval: 30s
-retries: 5
-```
-
-```bash
-docker compose up ou docker compose up -d
-```
-```bash
-docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser
-```
-
-O NetBox estará disponível em:
-👉 http://localhost:8000
-
-🌐 Nginx (HTTPS Proxy)
-
-Crie a pasta para os certificados:
-```bash
-mkdir -p /opt/event-driven-automation/nginx/certs
-```
-
-```bash
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /opt/event-driven-automation/nginx/certs/privkey.pem \
-  -out /opt/event-driven-automation/nginx/certs/fullchain.pem \
-  -subj "/CN=localhost"
-```
-
-Alterar IP Address em /opt/event-driven-automation/nginx/conf.d/default.conf
-
-```bash
-nano /opt/event-driven-automation/nginx/conf.d/default.conf
-```
-
-Subindo o container do NGINX
-```bash
-cd  /opt/event-driven-automation/nginx
-docker compose up ou docker compose -d
 ```
 
 🖥️ Iniciando os Exercícios de Automação de Rede
