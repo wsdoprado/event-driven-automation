@@ -49,7 +49,7 @@ git clone https://github.com/hellt/vrnetlab.git
 
 Importe a imagem do Arista cEOS:
 ```bash
-docker import cEOS64-lab-4.32.0F.tar.xz ceos:4.32.0F
+docker import cEOS-lab-4.34.2F.tar.xz ceos:4.34.2F
 ```
 
 Suba o laboratório de exemplo:
