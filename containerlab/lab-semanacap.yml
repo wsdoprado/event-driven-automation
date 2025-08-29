@@ -1,0 +1,49 @@
+name: semanacap11
+
+mgmt:
+  network: mgmt
+  ipv4-subnet: 192.168.100.0/24
+
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.34.2
+    cisco_iol:
+      image: vrnetlab/cisco_iol:17.12.01
+
+  nodes:
+    spine-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.100.101
+    spine-02:
+      kind: ceos
+      mgmt-ipv4: 192.168.100.102
+    leaf-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.100.103
+    leaf-02:
+      kind: ceos
+      mgmt-ipv4: 192.168.100.104
+    leaf-03:
+      kind: ceos
+      mgmt-ipv4: 192.168.100.105
+    host-01:
+      kind: cisco_iol
+      mgmt-ipv4: 192.168.100.106
+    host-02:
+      kind: cisco_iol
+      mgmt-ipv4: 192.168.100.107
+    host-03:
+      kind: cisco_iol
+      mgmt-ipv4: 192.168.100.108
+
+  links:
+    - endpoints: ["spine-01:eth1", "leaf-01:eth1"]
+    - endpoints: ["spine-01:eth2", "leaf-02:eth1"]
+    - endpoints: ["spine-01:eth3", "leaf-03:eth1"]
+    - endpoints: ["spine-02:eth1", "leaf-01:eth2"]
+    - endpoints: ["spine-02:eth2", "leaf-02:eth2"]
+    - endpoints: ["spine-02:eth3", "leaf-03:eth2"]
+    - endpoints: ["host-01:Ethernet0/1","leaf-01:eth3"]
+    - endpoints: ["host-02:Ethernet0/1","leaf-02:eth3"]
+    - endpoints: ["host-03:Ethernet0/1","leaf-03:eth3"]
