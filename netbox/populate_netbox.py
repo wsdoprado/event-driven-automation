@@ -40,8 +40,8 @@ for m in manufacturers:
 
 # Criar plataformas
 platforms = [
-    {"name": "Cisco IOS", "slug": "cisco-ios"},
-    {"name": "Arista EOS", "slug": "arista-eos"}
+    {"name": "ios", "slug": "ios"},
+    {"name": "eos", "slug": "eos"}
 ]
 
 platform_ids = {}
@@ -98,9 +98,9 @@ for site_data in sites:
      
 # Criar roles: P, PE e L2
 roles = [
-    {"name": "P", "slug": "p", "color": "ff0000"},
-    {"name": "PE", "slug": "pe", "color": "0000ff"},
-    {"name": "L2", "slug": "l2", "color": "00ff00"},
+    {"name": "Spine", "slug": "spine", "color": "ff0000"},
+    {"name": "Leaf", "slug": "leaf", "color": "0000ff"},
+    {"name": "Host", "slug": "host", "color": "00ff00"},
 ]        
 
 role_ids = {}
@@ -115,7 +115,7 @@ for r in roles:
 
 # Criar tenants: Producao e Laboratorio
 tenants = [
-    {"name": "produção", "slug": "produção"},
+    {"name": "producao", "slug": "producao"},
     {"name": "laboratorio", "slug": "laboratorio"},
 ]
 
@@ -191,19 +191,20 @@ for dt in device_types:
 
 # Devices + IPs de gerência
 devices_to_create = [
-    {"name": "cisco-r1", "slug": "cisco-ios", "site": "sp-site", "role": "l2", "mgmt_ip": "192.168.100.121/24", "tenant": "producao"},
-    {"name": "cisco-r2", "slug": "cisco-ios", "site": "rj-site", "role": "l2", "mgmt_ip": "192.168.100.122/24", "tenant": "producao"},
-    {"name": "arista-r1", "slug": "arista-ceos", "site": "sp-site", "role": "pe", "mgmt_ip": "192.168.100.101/24", "tenant": "producao"},
-    {"name": "arista-r2", "slug": "arista-ceos", "site": "rj-site", "role": "pe", "mgmt_ip": "192.168.100.102/24", "tenant": "producao"},
-    {"name": "arista-r3", "slug": "arista-ceos", "site": "ce-site", "role": "pe", "mgmt_ip": "192.168.100.103/24", "tenant": "producao"},
-    {"name": "arista-r4", "slug": "arista-ceos", "site": "mg-site", "role": "pe", "mgmt_ip": "192.168.100.104/24", "tenant": "producao"},
-    {"name": "arista-r5", "slug": "arista-ceos", "site": "sp-site", "role": "pe", "mgmt_ip": "192.168.100.105/24", "tenant": "producao"},
+    {"name": "spine-01", "slug": "arista-ceos", "site": "pop-sp", "role": "spine", "mgmt_ip": "192.168.100.101/24", "tenant": "producao", "platform": "eos"},
+    {"name": "spine-02", "slug": "arista-ceos", "site": "pop-rj", "role": "spine", "mgmt_ip": "192.168.100.102/24", "tenant": "producao", "platform": "eos"},
+    {"name": "leaf-01", "slug": "arista-ceos", "site": "pop-ce", "role": "leaf", "mgmt_ip": "192.168.100.103/24", "tenant": "producao", "platform": "eos"},
+    {"name": "leaf-02", "slug": "arista-ceos", "site": "pop-mg", "role": "leaf", "mgmt_ip": "192.168.100.104/24", "tenant": "producao", "platform": "eos"},
+    {"name": "leaf-03", "slug": "arista-ceos", "site": "pop-sp", "role": "leaf", "mgmt_ip": "192.168.100.105/24", "tenant": "producao", "platform": "eos"},
+    {"name": "host-01", "slug": "cisco-ios", "site": "pop-rj", "role": "host", "mgmt_ip": "192.168.100.106/24", "tenant": "producao", "platform": "ios"},
+    {"name": "host-02", "slug": "cisco-ios", "site": "pop-ce", "role": "host", "mgmt_ip": "192.168.100.107/24", "tenant": "producao", "platform": "ios"},
+    {"name": "host-03", "slug": "cisco-ios", "site": "pop-mg", "role": "host", "mgmt_ip": "192.168.100.108/24", "tenant": "producao", "platform": "ios"}
 ]
 
 for dev in devices_to_create:
     site = nb.dcim.sites.get(slug=dev["site"])
     device_type = nb.dcim.device_types.get(slug=dev["slug"])
-    platform = nb.dcim.platforms.get(slug=dev["slug"])
+    platform = nb.dcim.platforms.get(slug=dev["platform"])
     role_id = role_ids[dev["role"]]
     tenant_id = tenant_ids[dev["tenant"]]
 
