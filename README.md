@@ -116,7 +116,7 @@ Acessar a pasta no vrnetlab para cisco iol e criar a imagem
  cd /opt/vrnetlab/cisco/iol/
 make docker-image
 ```
-# Criando o container para Arists cEOS
+# Criando o container para Arista cEOS
 Importe a imagem do Arista cEOS:
 ```bash
 docker import cEOS-lab-4.34.2F.tar.xz ceos:4.34.2F
