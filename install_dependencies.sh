@@ -31,5 +31,7 @@ docker compose version
 # Containerlab
 curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
 
+sudo usermod -aG clab_admins root && newgrp clab_admins
+
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
