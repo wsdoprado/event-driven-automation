@@ -39,7 +39,10 @@ Baixe as imagens de Arista e Cisco IOS:
 📂 Google Drive - Imagens de Laboratório
  - https://drive.google.com/drive/folders/1uLDcgJuoxOE7c4ZD3WsPwLmvPrJKqeLE
 
-Clone o repositório vrnetlab:
+OBS: cEOS-lab-4.34.2F.tar.xz & x86_64_crb_linux-adventerprisek9-ms precisam estar no host do laboratorio. 
+Dica: Transferir por SCP
+
+Clone o repositório vrnetlab (para build do container CISCO IOS):
 ```bash
 git clone https://github.com/hellt/vrnetlab.git
 ```
