@@ -24,6 +24,7 @@ sudo apt install -y docker-ce-cli
 sudo apt install -y containerd.io 
 sudo apt install -y docker-compose-plugin
 sudo apt install -y curl
+sudo apt install -y wget
 
 docker --version
 docker compose version
