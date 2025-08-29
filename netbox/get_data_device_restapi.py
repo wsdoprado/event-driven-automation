@@ -44,7 +44,7 @@ HEADERS = {
 # ----------------------------------------------
 def get_devices(params=None):
     """
-    params: dict opcional para filtros, ex: {"site": "sp-site", "role": "pe"}
+    params: dict opcional para filtros, ex: {"site": "pop-sp", "role": "spine"}
     """
     url = f"{NETBOX_URL}/api/dcim/devices/"
 
@@ -56,6 +56,7 @@ def get_devices(params=None):
         #print(f"Text String: {response.text}")  # retorna a resposta como string
         #print(type(response.text))
         data = response.json()  # converte o corpo da resposta em dict/list
+        #print(data)
         #print(data['results'])
         #print(type(data))
     except requests.exceptions.RequestException as e:
@@ -71,10 +72,12 @@ if __name__ == "__main__":
     #print(f"Total de devices encontrados: {len(devices)}\n")
     #print(type(devices))
     for device in devices:
+        #print(device)
         if device.get('primary_ip'):
             ip_address = device['primary_ip']['address']
+            #print(ip_address)
             ip_address = ip_address.split("/")[0]  # pega só o IP sem máscara
         else:
             ip_address = "N/A"
-    
-        print(f"{device['name']} - Site: {device['site']['name']} - Role: {device['role']['name']} - Tenant: {device['tenant']['name']} - MGMT: {ip_address}")
+     
+        print(f"{device['name']} - Site: {device['site']['name']} - Role: {device['role']['name']} - Tenant: {device['tenant']['name']} - MGMT: {ip_address} - Platform: {device['platform']['name']}")

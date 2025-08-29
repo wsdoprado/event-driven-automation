@@ -42,12 +42,12 @@ HEADERS = {
 # Função para consumir devices
 def get_devices(params=None):
     """
-    params: dict opcional para filtros, ex: {"site": "sp-site", "role": "pe"}
+    params: dict opcional para filtros, ex: {"site": "pop-sp", "role": "spine"}
     """
     url = f"{NETBOX_URL}/api/dcim/devices/"
 
     try:
-        response = requests.get(url, headers=headers, params=params, verify=False)
+        response = requests.get(url, headers=HEADERS, params=params, verify=False)
         data = response.json()  # converte o corpo da resposta em dict/list
     except requests.exceptions.RequestException as e:
         print(f"❌ Erro ao consumir API: {e}")
@@ -69,7 +69,7 @@ def get_interfaces(device_id):
     try:
         params = {"device_id": device_id}
 
-        response = requests.get(url, headers=headers, params=params, verify=False)
+        response = requests.get(url, headers=HEADERS, params=params, verify=False)
         data = response.json()
             
     except requests.exceptions.RequestException as e:
