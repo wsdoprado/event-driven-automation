@@ -107,10 +107,11 @@ retries: 5
 ```
 
 ```bash
-docker compose up
+docker compose up ou docker compose up -d
 ```
-
-
+```bash
+docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser
+```
 
 O NetBox estará disponível em:
 👉 http://localhost:8000
