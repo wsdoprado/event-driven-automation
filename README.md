@@ -131,6 +131,12 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -subj "/CN=localhost"
 ```
 
+Alterar IP Address em /opt/event-driven-automation/nginx/conf.d/default.conf
+
+```bash
+nano /opt/event-driven-automation/nginx/conf.d/default.conf
+```
+
 🖥️ Iniciando os Exercícios de Automação de Rede
 
 Criar um arquivo .env na raiz do projeto
