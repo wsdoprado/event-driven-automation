@@ -32,7 +32,7 @@ Execute o script abaixo para instalar as dependências necessárias:
 ./install_dependencies.sh
 ```
 
-📦 NetBox (IPAM/DCIM)
+## 📦 NetBox (IPAM/DCIM)
 
 O NetBox será utilizado como fonte de dados de rede.
 
@@ -67,7 +67,7 @@ docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser
 O NetBox estará disponível em:
 👉 http://localhost:8000
 
-🌐 Nginx (HTTPS Proxy)
+## 🌐 Nginx (HTTPS Proxy)
 
 Crie a pasta para os certificados:
 ```bash
@@ -93,7 +93,7 @@ cd  /opt/event-driven-automation/nginx
 docker compose up ou docker compose -d
 ```
 
-# 🧪 Laboratórios com Containerlab
+## 🧪 Laboratório com Containerlab
 
 Baixe as imagens de Arista e Cisco IOS:
 📂 Google Drive - Imagens de Laboratório
@@ -138,7 +138,7 @@ Liste e inspecione laboratórios ativos:
 containerlab inspect --all
 ```
 
-🐍 Ambiente Python para execução dos scripts
+## 🐍 Ambiente Python para execução dos scripts
 
 Para executar os scritps em python é necessário criar um ambiente virtual e instalar as dependências.
 ```bash
@@ -156,7 +156,7 @@ Sair do ambiente virtual
 deactivate
 ```
 
-🖥️ Iniciando os Exercícios de Automação de Rede
+## 🖥️ Iniciando os Exercícios de Automação de Rede
 
 Criar um arquivo .env na raiz do projeto
 ```bash
@@ -174,7 +174,7 @@ USER_DEVICE=admin
 PASSW_DEVICE=sua_senha_aqui
 ```
 
-🧩 Temporal
+## 🧩 Temporal
 
 O Temporal será utilizado para orquestração das atividades.
 Subir o Temporal
