@@ -34,7 +34,7 @@ Execute o script abaixo para instalar as dependências necessárias:
 
 ## 📦 NetBox (IPAM/DCIM)
 
-O NetBox será utilizado como fonte de dados de rede.
+O NetBox será utilizado como fonte da verdade - NSOT
 
 ```bash
 git clone -b release https://github.com/netbox-community/netbox-docker.git
