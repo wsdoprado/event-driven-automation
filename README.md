@@ -93,7 +93,7 @@ cd  /opt/event-driven-automation/nginx
 docker compose up ou docker compose -d
 ```
 
-🧪 Laboratórios com Containerlab
+# 🧪 Laboratórios com Containerlab
 
 Baixe as imagens de Arista e Cisco IOS:
 📂 Google Drive - Imagens de Laboratório
@@ -102,7 +102,7 @@ Baixe as imagens de Arista e Cisco IOS:
 OBS: cEOS-lab-4.34.2F.tar.xz & cisco_iol-17.12.01.bin precisam estar no host do laboratorio. 
 Dica: Transferir por SCP
 
-# Criando o container para cisco IOS
+## Criando o container para cisco IOS
 Clone o repositório vrnetlab (para build do container CISCO IOS):
 ```bash
 git clone https://github.com/hellt/vrnetlab.git
