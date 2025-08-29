@@ -42,6 +42,7 @@ Baixe as imagens de Arista e Cisco IOS:
 OBS: cEOS-lab-4.34.2F.tar.xz & cisco_iol-17.12.01.bin precisam estar no host do laboratorio. 
 Dica: Transferir por SCP
 
+# Criando o container para cisco IOS
 Clone o repositório vrnetlab (para build do container CISCO IOS):
 ```bash
 git clone https://github.com/hellt/vrnetlab.git
@@ -55,12 +56,13 @@ Acessar a pasta no vrnetlab para cisco iol e criar a imagem
  cd /opt/vrnetlab/cisco/iol/
 make docker-image
 ```
-
+# Criando o container para Arists cEOS
 Importe a imagem do Arista cEOS:
 ```bash
 docker import cEOS-lab-4.34.2F.tar.xz ceos:4.34.2F
 ```
 
+# Criando o laboratorio do curso
 Suba o laboratório de exemplo:
 ```bash
 containerlab deploy -t lab-semanacap.yml
