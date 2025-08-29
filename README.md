@@ -22,7 +22,7 @@ apt install git -y
 Git clone do Repositorio
 
 ```bash
-https://github.com/wsdoprado/event-driven-automation.git
+git clone https://github.com/wsdoprado/event-driven-automation.git
 ```
 
 Execute o script abaixo para instalar as dependências necessárias:
