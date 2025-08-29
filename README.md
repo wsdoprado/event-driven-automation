@@ -22,6 +22,7 @@ apt install git -y
 Git clone do Repositorio
 
 ```bash
+cd /opt
 git clone https://github.com/wsdoprado/event-driven-automation.git
 ```
 
