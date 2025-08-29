@@ -140,7 +140,7 @@ nano /opt/event-driven-automation/nginx/conf.d/default.conf
 Subindo o container do NGINX
 ```bash
 cd  /opt/event-driven-automation/nginx
-docker compose up
+docker compose up ou docker compose -d
 ```
 
 🖥️ Iniciando os Exercícios de Automação de Rede
