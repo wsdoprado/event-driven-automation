@@ -13,6 +13,12 @@ Antes de começar, certifique-se de que o sistema possui:
   
 ## 🚀 Instalação das Dependências
 
+Instalac̨ão do GIT
+
+```bash
+apt install git -y
+```
+
 Execute o script abaixo para instalar as dependências necessárias:
 
 ```bash
