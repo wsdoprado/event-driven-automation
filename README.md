@@ -137,6 +137,12 @@ Alterar IP Address em /opt/event-driven-automation/nginx/conf.d/default.conf
 nano /opt/event-driven-automation/nginx/conf.d/default.conf
 ```
 
+Subindo o container do NGINX
+```bash
+cd  /opt/event-driven-automation/nginx
+docker compose up
+```
+
 🖥️ Iniciando os Exercícios de Automação de Rede
 
 Criar um arquivo .env na raiz do projeto
