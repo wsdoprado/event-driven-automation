@@ -7,10 +7,16 @@ services:
     image: postgres:${POSTGRESQL_VERSION}
     networks:
       - temporal-network
-    expose:
-      - 5432
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "temporal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - /var/lib/postgresql/data
+
   temporal:
     container_name: temporal
     depends_on:
@@ -45,6 +51,7 @@ services:
       - 7233:7233
     volumes:
       - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+
   temporal-admin-tools:
     container_name: temporal-admin-tools
     depends_on:
@@ -57,6 +64,7 @@ services:
       - temporal-network
     stdin_open: true
     tty: true
+
   temporal-ui:
     container_name: temporal-ui
     depends_on:
@@ -69,12 +77,13 @@ services:
       - temporal-network
     ports:
       - "8080:8080"
-  worker:
+
+  worker-device:
     build:
       context: ./
       additional_contexts:
         uv_files: ../
-    command: python -m workers.worker
+    command: python -m workers.device
     env_file:
       - .env.dev
     environment:
@@ -85,10 +94,13 @@ services:
     restart: unless-stopped
     networks:
       - temporal-network
-    deploy:
-      mode: replicated
-      replicas: 2
-  client-api:
+    #deploy:
+    # mode: replicated
+    #  replicas: 2
+    volumes:
+      - ./logs/temporal:/var/log/projeto
+
+  api-webhook:
     build:
       context: ./
       additional_contexts:
@@ -96,7 +108,12 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 9000
     ports:
       - "9000:9000"
-
+    environment:
+      - TEMPORAL_SERVER=temporal:7233
+    networks:
+      - temporal-network
+    volumes:
+      - ./logs/api:/var/log/projeto
 
 networks:
   temporal-network:

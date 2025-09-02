@@ -228,6 +228,9 @@ dependencies = [
     { name = "nornir-netbox" },
     { name = "nornir-netmiko" },
     { name = "nornir-utils" },
+    { name = "pyeapi" },
+    { name = "pynetbox" },
+    { name = "python-dotenv" },
     { name = "requests" },
     { name = "temporalio" },
     { name = "uvicorn" },
@@ -243,6 +246,9 @@ requires-dist = [
     { name = "nornir-netbox", specifier = ">=0.3.0" },
     { name = "nornir-netmiko", specifier = ">=1.0.1" },
     { name = "nornir-utils", specifier = ">=0.2.0" },
+    { name = "pyeapi", specifier = ">=1.0.4" },
+    { name = "pynetbox", specifier = ">=7.5.0" },
+    { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "temporalio", specifier = ">=1.16.0" },
     { name = "uvicorn", specifier = ">=0.35.0" },
@@ -610,6 +616,15 @@ wheels = [
 ]
 
 [[package]]
+name = "packaging"
+version = "25.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f", size = 165727, upload-time = "2025-04-19T11:48:59.673Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484", size = 66469, upload-time = "2025-04-19T11:48:57.875Z" },
+]
+
+[[package]]
 name = "paramiko"
 version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -743,6 +758,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pynetbox"
+version = "7.5.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d3/0b/695021a23c373991d07c1e4cb510287a521318cfc4b29f68ebbecb19fcd2/pynetbox-7.5.0.tar.gz", hash = "sha256:780064c800fb8c079c9828df472203146442ed3dd0b522a28a501204eb00c066", size = 73850, upload-time = "2025-05-20T16:03:03.831Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/b7/a24bc58f0e27f0cd847bf14ffbe9722604f5abe3ec9c12dd8f89cb965be8/pynetbox-7.5.0-py3-none-any.whl", hash = "sha256:ab755a0020c0abb09b4d24c8f8ba89df26f04fa56c35de73302e29a39352f031", size = 35808, upload-time = "2025-05-20T16:03:02.445Z" },
+]
+
+[[package]]
 name = "pyparsing"
 version = "3.2.3"
 source = { registry = "https://pypi.org/simple" }
@@ -758,6 +786,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1e/7d/ae3f0a63f41e4d2f6cb66a5b57197850f919f59e558159a4dd3a818f5082/pyserial-3.5.tar.gz", hash = "sha256:3c77e014170dfffbd816e6ffc205e9842efb10be9f58ec16d3e8675b4925cddb", size = 159125, upload-time = "2020-11-23T03:59:15.045Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/07/bc/587a445451b253b285629263eb51c2d8e9bcea4fc97826266d186f96f558/pyserial-3.5-py2.py3-none-any.whl", hash = "sha256:c4451db6ba391ca6ca299fb3ec7bae67a5c55dde170964c7a14ceefec02f2cf0", size = 90585, upload-time = "2020-11-23T03:59:13.41Z" },
+]
+
+[[package]]
+name = "python-dotenv"
+version = "1.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f6/b0/4bc07ccd3572a2f9df7e6782f52b0c6c90dcbb803ac4a167702d7d0dfe1e/python_dotenv-1.1.1.tar.gz", hash = "sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab", size = 41978, upload-time = "2025-06-24T04:21:07.341Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5f/ed/539768cf28c661b5b068d66d96a2f155c4971a5d55684a514c1a0e0dec2f/python_dotenv-1.1.1-py3-none-any.whl", hash = "sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc", size = 20556, upload-time = "2025-06-24T04:21:06.073Z" },
 ]
 
 [[package]]

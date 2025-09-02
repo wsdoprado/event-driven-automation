@@ -1,11 +1,11 @@
-import asyncio
-import os
+import asyncio, os, logging
 from temporalio.worker import Worker
 from temporalio.client import Client
 
 
-from activities.operations import generate_value_a, generate_value_b, result_sum
-from workflows.workflow import MakeSumOperationWorkflow
+#from activities.operations import get_config, change_hostname
+from activities.device.arista_ceos import get_config, change_hostname
+from workflows.device import DeviceWorkflow
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -18,12 +18,13 @@ async def main():
     worker = Worker(
         client,
         task_queue="worker-queue",
-        workflows=[MakeSumOperationWorkflow],
+        workflows=[DeviceWorkflow],
         activities=[
-            generate_value_a,
-            generate_value_b,
-            result_sum
+            get_config,
+            change_hostname
         ],
+        max_concurrent_workflow_tasks=1,    # Apenas 1 workflow task por vez
+        max_concurrent_activities=1,
     )
 
     await worker.run()
