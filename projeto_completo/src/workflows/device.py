@@ -1,8 +1,9 @@
 from datetime import timedelta
 from temporalio import workflow
 from temporalio.common import RetryPolicy
-#from activities.operations import get_config, change_hostname
-from activities.device.arista_ceos import get_config, change_hostname
+
+with workflow.unsafe.imports_passed_through():
+    from activities.device.arista_ceos import get_config, change_hostname
 
 # Constants Timeout
 TIMEOUT_ACTIVITY = 120

@@ -94,9 +94,25 @@ services:
     restart: unless-stopped
     networks:
       - temporal-network
-    #deploy:
-    # mode: replicated
-    #  replicas: 2
+    volumes:
+      - ./logs/temporal:/var/log/projeto
+  
+  worker-interface:
+    build:
+      context: ./
+      additional_contexts:
+        uv_files: ../
+    command: python -m workers.interface
+    env_file:
+      - .env.dev
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+    depends_on:
+      temporal:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - temporal-network
     volumes:
       - ./logs/temporal:/var/log/projeto
 

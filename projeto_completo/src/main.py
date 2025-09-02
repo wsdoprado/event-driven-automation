@@ -3,12 +3,13 @@ import json, os, logging, asyncio
 from fastapi import FastAPI, HTTPException, Request
 from temporalio.client import Client
 from workflows.device import DeviceWorkflow
-
+from workflows.interface import InterfaceWorkflow
 
 # Instância do FastAPI
 app = FastAPI(title="NetBox Webhook Receiver", version="1.0")
 
 DEVICE_QUEUE = "DEVICE_QUEUE"
+INTERFACE_QUEUE = "INTERFACE_QUEUE"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,19 +44,28 @@ async def receive_netbox_webhook(request: Request):
         model = payload.get("model")
         event = payload.get("event")
         data = payload.get("data")
-        #snapshots = payload.get("snapshots")
+        snapshots = payload.get("snapshots")
         
         if not model or not event or not data:
             raise HTTPException(status_code=400, detail="Payload incompleto.")
         
-        result = await temporal_client.execute_workflow(
-            DeviceWorkflow.run,
-            id="operation-workflow-id",
-            task_queue="worker-queue",
-            args=[data],
-        )
+        if model == "device":
+            result = await temporal_client.execute_workflow(
+                DeviceWorkflow.run,
+                id="workflow-device-id",
+                task_queue=DEVICE_QUEUE,
+                args=[data],
+            )
+        
+        if model == "interface":
+            result = await temporal_client.execute_workflow(
+                InterfaceWorkflow.run,
+                id="workflow-interface-id",
+                task_queue=INTERFACE_QUEUE,
+                args=[data],
+            )
 
-        print(f"Result: {result}")
+        #print(f"Result: {result}")
     
     except Exception as e:
         print(f"Erro ao processar webhook: {e}")
