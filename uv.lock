@@ -228,10 +228,7 @@ dependencies = [
     { name = "nornir-netbox" },
     { name = "nornir-netmiko" },
     { name = "nornir-utils" },
-<<<<<<< HEAD
     { name = "pyeapi" },
-=======
->>>>>>> dd327a34008156ca91f189659715dc124c197e35
     { name = "pynetbox" },
     { name = "python-dotenv" },
     { name = "requests" },
@@ -249,10 +246,7 @@ requires-dist = [
     { name = "nornir-netbox", specifier = ">=0.3.0" },
     { name = "nornir-netmiko", specifier = ">=1.0.1" },
     { name = "nornir-utils", specifier = ">=0.2.0" },
-<<<<<<< HEAD
     { name = "pyeapi", specifier = ">=1.0.4" },
-=======
->>>>>>> dd327a34008156ca91f189659715dc124c197e35
     { name = "pynetbox", specifier = ">=7.5.0" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "requests", specifier = ">=2.32.5" },
