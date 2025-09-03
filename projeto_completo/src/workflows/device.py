@@ -1,36 +1,76 @@
 from datetime import timedelta
 from temporalio import workflow
 from temporalio.common import RetryPolicy
+from temporalio.exceptions import ApplicationError
 
+# Importação especial para permitir chamadas a módulos externos dentro do workflow do Temporal
 with workflow.unsafe.imports_passed_through():
     from activities.device.arista_ceos import get_config, change_hostname
+    from activities.remote.telegram import send_message
 
-# Constants Timeout
-TIMEOUT_ACTIVITY = 120
-TIMEOUT_NETBOX = 120
-TIMEOUT_DEVICE = 360
+# Constantes de timeout (em segundos)
+TIMEOUT_ACTIVITY = 120  # Tempo limite para atividades genéricas
+TIMEOUT_NETBOX = 120    # Tempo limite específico para operações no NetBox
+TIMEOUT_DEVICE = 360    # Tempo limite para operações em dispositivos de rede
 
-# Default retry policy for Temporal activities
+# Política padrão de retry para atividades no Temporal
 RETRY_POLICY_DEFAULT = RetryPolicy(
-    initial_interval=timedelta(seconds=10),     # Time to wait before the first retry attempt
-    backoff_coefficient=2.0,                    # Multiplier for exponential backoff (e.g., 10s, 20s, 40s, etc.)
-    maximum_interval=timedelta(seconds=120),    # Maximum wait time between retries
-    maximum_attempts=50                         # Total number of attempts including the first try
+    initial_interval=timedelta(seconds=10),     # Espera antes da primeira tentativa de retry
+    backoff_coefficient=2.0,                    # Fator de multiplicação para o backoff exponencial (10s, 20s, 40s, etc.)
+    maximum_interval=timedelta(seconds=120),    # Intervalo máximo entre tentativas
+    maximum_attempts=50                         # Número máximo de tentativas (inclui a primeira execução)
 )
 
+# Função auxiliar para enviar mensagens via Telegram (atividade assíncrona no Temporal)
+async def send_message_telegram(text: str) -> None:
+    try:
+        await workflow.execute_activity(
+            send_message,                      # Atividade que realmente envia a mensagem
+            text,                              # Texto da mensagem
+            schedule_to_close_timeout=timedelta(seconds=TIMEOUT_ACTIVITY), # Timeout da execução
+        )
+    except Exception as e:
+        # Caso falhe, levanta um erro que pode ser tratado pelo workflow
+        raise ApplicationError(f"Falha ao enviar mensagem para o Telegram: {e}")
+
+# Definição do workflow principal
 @workflow.defn
 class DeviceWorkflow:
     @workflow.run
     async def run(self, webhook: dict) -> dict:
+        # Recebe os dados do webhook e faz o log inicial
         data = webhook
-        #workflow.logger.info(f"data: {data}")
+        
+        # Salva o LOG no arquivo de logs
+        workflow.logger.info(f"[INFO] Webhook received: {data}")
+        
+        #Envia Mensagem para o Telegram
+        await send_message_telegram(f"Webhook received: {data}")
+        
+        
+        # Extrai informações principais do device enviadas pelo webhook
         device_name_nbx = data['name']
         device_platform = data['platform']['name']
         device_mgmt = data['primary_ip4']['address']
         device_mgmt = device_mgmt.split("/")[0]
-        device = {"device_name": device_name_nbx, "device_platform": device_platform, "device_mgmt": device_mgmt}
-        workflow.logger.info(f"device no workflow: {device}")
+        
+        # Estrutura com os dados do device
+        device = {
+            "device_name": device_name_nbx, 
+            "device_platform": device_platform, 
+            "device_mgmt": device_mgmt
+        }
+        
+        # Se o equipamento for da plataforma Arista EOS
         if device_platform == "eos":
+            
+            # Salva o LOG no arquivo de logs
+            workflow.logger.info(f"[INFO] Coletando configuracoes do host: {device["device_name"]} - IP: {device["device_mgmt"]}")
+            
+            #Envia Mensagem para o Telegram
+            await send_message_telegram(f"Coletando configuracoes do host: {device["device_name"]} - IP: {device["device_mgmt"]}")
+            
+            # Executa a atividade que coleta a configuração atual do device
             device_results = await workflow.execute_activity(
                     get_config,
                     args=[device],
@@ -38,20 +78,47 @@ class DeviceWorkflow:
                     retry_policy=RETRY_POLICY_DEFAULT,  
             )
             
-            ##Validando hostname
+            # Coleta o hostname retornado pelo device
             device_name = device_results['data']['facts']['hostname']
             
+            # Caso o hostname do device seja diferente do registrado no NetBox
             if device_name != device_name_nbx:
-                workflow.logger.info(f"hostname diferente: device: {device_name} netbox:{device_name_nbx}")
+                # Salva o LOG no arquivo de logs
+                workflow.logger.info(f"[INFO] Iniciando troca de hostname de: {device_name} para {device_name_nbx}")  
+                
+                #Envia Mensagem para o Telegram
+                await send_message_telegram(f"Iniciando troca de hostname de: {device_name} para {device_name_nbx}")
+                
+                # Executa a atividade de troca de hostname
                 results_change_hostname = await workflow.execute_activity(
                     change_hostname,
                     args=[device,device_name_nbx],
                     schedule_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
                     retry_policy=RETRY_POLICY_DEFAULT,  
                 )
-                workflow.logger.info(f"troca de hostname: {results_change_hostname}")   
+                
+                # Executa a atividade de troca de hostname
+                if results_change_hostname["status"] == True:
+                    # Salva o LOG no arquivo de logs
+                    workflow.logger.info(f"[INFO] Troca de hostname finalizada.")  
+                    
+                    #Envia Mensagem para o Telegram
+                    await send_message_telegram(f"Troca de hostname finalizada.")
+                else:
+                    # Salva o LOG no arquivo de logs
+                    workflow.logger.info(f"[INFO] Troca de hostname nao realizada. Verifique.")  
+                    
+                    #Envia Mensagem para o Telegram
+                    await send_message_telegram(f"Troca de hostname nao realizada. Verifique.")
+            
+            # Caso o hostname já esteja correto, nada é feito    
             else:
-                workflow.logger.info(f"hostaname iguais: device: {device_name} netbox:{device_name_nbx}")    
-            #workflow.logger.info(f"result: {results}")
-        return device
+                # Salva o LOG no arquivo de logs
+                workflow.logger.info(f"[INFO] Nada a fazer. hostname iguais: device: {device_name} netbox: {device_name_nbx}")    
+                
+                #Envia Mensagem para o Telegram
+                await send_message_telegram(f"Nada a fazer. hostname iguais: device: {device_name} netbox: {device_name_nbx}")
+                
+        # Retorna os dados do dispositivo processado
+        return {"status": True}
 

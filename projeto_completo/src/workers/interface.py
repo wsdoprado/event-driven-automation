@@ -5,6 +5,7 @@ from temporalio.client import Client
 from activities.device.arista_ceos import get_config, change_hostname, apply_interface_config
 from activities.netbox.restapi import get_device_restapi
 from activities.netbox.graphql import get_device_graphql
+from activities.remote.telegram import send_message
 from workflows.interface import InterfaceWorkflow
 
 import logging
@@ -34,7 +35,8 @@ async def main():
             change_hostname,
             apply_interface_config,
             get_device_restapi,
-            get_device_graphql
+            get_device_graphql,
+            send_message
         ],
         #max_concurrent_workflow_tasks=1,    
         #max_concurrent_activities=1,

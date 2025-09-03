@@ -1,25 +1,61 @@
-import json, os, logging, asyncio
+"""
+FastAPI Webhook Receiver para NetBox integrado ao Temporal.io
 
+Este serviço recebe webhooks enviados pelo NetBox quando há mudanças
+em dispositivos ou interfaces e aciona workflows no Temporal para
+sincronizar a configuração nos dispositivos de rede.
+
+Fluxo principal:
+1. Receber webhook JSON do NetBox (device/interface).
+2. Validar payload e extrair dados relevantes.
+3. Acionar workflow no Temporal (DeviceWorkflow ou InterfaceWorkflow).
+4. Retornar status da execução ao cliente.
+
+Autor: William Prado
+"""
+
+import os
+import uuid
+import logging
+import asyncio
 from fastapi import FastAPI, HTTPException, Request
 from temporalio.client import Client
+
+# Importação dos workflows
 from workflows.device import DeviceWorkflow
 from workflows.interface import InterfaceWorkflow
 
-# Instância do FastAPI
-app = FastAPI(title="NetBox Webhook Receiver", version="1.0")
-
-DEVICE_QUEUE = "DEVICE_QUEUE"
-INTERFACE_QUEUE = "INTERFACE_QUEUE"
-
+# Configuração de logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
     filename="/var/log/projeto/fastapi.log",  
     filemode="a"
 )
+
+# Instância do FastAPI
+app = FastAPI(
+    title="NetBox Webhook Receiver", 
+    version="1.0"
+)
+
+# Constantes das filas do Temporal
+DEVICE_QUEUE = "DEVICE_QUEUE"
+INTERFACE_QUEUE = "INTERFACE_QUEUE"
         
 @app.post("/webhook/netbox")
 async def receive_netbox_webhook(request: Request):
+    """
+    Endpoint que recebe webhooks do NetBox e inicia workflows no Temporal.
+
+    Payload esperado:
+    {
+        "model": "device" | "interface",
+        "event": "created" | "updated" | "deleted",
+        "data": {...},            # Dados principais do objeto
+        "snapshots": {...}        # (opcional) Estado anterior
+    }
+    """
     try:
         logger = logging.getLogger("fastapi")
         
@@ -49,6 +85,7 @@ async def receive_netbox_webhook(request: Request):
         if not model or not event or not data:
             raise HTTPException(status_code=400, detail="Payload incompleto.")
         
+        # Disparo do workflow DeviceWorkflow
         if model == "device":
             result = await temporal_client.execute_workflow(
                 DeviceWorkflow.run,
@@ -57,6 +94,7 @@ async def receive_netbox_webhook(request: Request):
                 args=[data],
             )
         
+        # Disparo do workflow InterfaceWorkflow
         if model == "interface":
             result = await temporal_client.execute_workflow(
                 InterfaceWorkflow.run,
@@ -64,8 +102,6 @@ async def receive_netbox_webhook(request: Request):
                 task_queue=INTERFACE_QUEUE,
                 args=[data],
             )
-
-        #print(f"Result: {result}")
     
     except Exception as e:
         print(f"Erro ao processar webhook: {e}")

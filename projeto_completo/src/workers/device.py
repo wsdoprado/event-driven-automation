@@ -3,6 +3,7 @@ from temporalio.worker import Worker
 from temporalio.client import Client
 
 from activities.device.arista_ceos import get_config, change_hostname
+from activities.remote.telegram import send_message
 from workflows.device import DeviceWorkflow
 
 import logging
@@ -29,7 +30,8 @@ async def main():
         workflows=[DeviceWorkflow],
         activities=[
             get_config,
-            change_hostname
+            change_hostname,
+            send_message
         ],
         #max_concurrent_workflow_tasks=1,    
         #max_concurrent_activities=1,
