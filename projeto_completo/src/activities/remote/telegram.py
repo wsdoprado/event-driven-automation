@@ -1,8 +1,8 @@
 import requests, asyncio
 from temporalio import activity
 
-CHAT_ID = "-4927892600"
-BOT_TOKEN = "8405758726:AAELmlrHxdTq1kKAEbJu_zYH1MwkG7iVZZE"
+CHAT_ID = 
+BOT_TOKEN = 
 
 @activity.defn
 async def send_message(message: str) -> dict:    
