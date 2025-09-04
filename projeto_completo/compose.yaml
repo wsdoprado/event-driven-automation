@@ -72,6 +72,7 @@ services:
         condition: service_healthy
     environment:
       - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CSRF_COOKIE_INSECURE=true
     image: temporalio/ui:${TEMPORAL_UI_VERSION}
     networks:
       - temporal-network

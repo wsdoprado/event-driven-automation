@@ -1,11 +1,14 @@
-import requests, asyncio
+import asyncio
+
+import requests
+import os
 from temporalio import activity
 
-CHAT_ID = 
-BOT_TOKEN = 
+CHAT_ID = os.getenv("CHAT_ID")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 @activity.defn
-async def send_message(message: str) -> dict:    
+async def send_message(message: str) -> dict:
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
         data = {"chat_id": CHAT_ID, "text": message}
@@ -15,7 +18,7 @@ async def send_message(message: str) -> dict:
         response.raise_for_status()
 
         return {"data": "", "status": True}
-    
+
     except requests.exceptions.HTTPError as http_err:
         activity.logger.info(f"[ERROR] HTTP error occurred: {http_err}")
         raise

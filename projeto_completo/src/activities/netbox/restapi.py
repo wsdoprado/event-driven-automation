@@ -20,6 +20,8 @@ async def get_device_restapi(device_id: int) -> dict:
         activity.logger.info(f"[INFO] token: {NETBOX_TOKEN}")
         url = f"{str(NETBOX_URL)}api/dcim/devices/{device_id}/"
         response = requests.get(url=url, headers=HEADERS, verify=False)
+        activity.logger.info(f"Response: {response}")
+
         response.raise_for_status()  # Garante que status HTTP é 200
 
         json_data = response.json()

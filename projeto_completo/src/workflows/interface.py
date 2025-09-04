@@ -9,6 +9,7 @@ with workflow.unsafe.imports_passed_through():
     from activities.netbox.restapi import get_device_restapi
     from activities.netbox.graphql import get_device_graphql
     from activities.remote.telegram import send_message
+    from utils import InterfaceData
     
 # Constantes de timeout (em segundos)
 TIMEOUT_ACTIVITY = 120  # Tempo limite para atividades genéricas
@@ -62,9 +63,7 @@ def compare_iface(nbx_iface: dict, dev_iface: dict) -> dict:
 @workflow.defn
 class InterfaceWorkflow:
     @workflow.run
-    async def run(self, webhook: dict) -> dict:
-        # Recebe os dados do webhook e faz o log inicial
-        data = webhook
+    async def run(self, data: InterfaceData) -> dict:
         
         # Salva o LOG no arquivo de logs
         workflow.logger.info(f"[INFO] Webhook received: {data}")
@@ -73,12 +72,12 @@ class InterfaceWorkflow:
         await send_message_telegram(f"Webhook received: {data}")
         
         # Extrai dados principais do webhook
-        iface_name_nbx = data['name']
-        iface_description_nbx = data['description']
-        iface_mtu_nbx = data['mtu']
-        iface_enabled_nbx = data['enabled']
-        iface_device_id = data['device']['id']
-        iface_device_name = data['device']['name']
+        iface_name_nbx = data.name
+        iface_description_nbx = data.description
+        iface_mtu_nbx = data.mtu
+        iface_enabled_nbx = data.enabled
+        iface_device_id = data.device.id
+        iface_device_name = data.device.name
         
         # Estrutura da interface no NetBox
         iface_nbx = {

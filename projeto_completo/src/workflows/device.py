@@ -7,6 +7,7 @@ from temporalio.exceptions import ApplicationError
 with workflow.unsafe.imports_passed_through():
     from activities.device.arista_ceos import get_config, change_hostname
     from activities.remote.telegram import send_message
+    from utils import DeviceData
 
 # Constantes de timeout (em segundos)
 TIMEOUT_ACTIVITY = 120  # Tempo limite para atividades genéricas
@@ -37,21 +38,17 @@ async def send_message_telegram(text: str) -> None:
 @workflow.defn
 class DeviceWorkflow:
     @workflow.run
-    async def run(self, webhook: dict) -> dict:
-        # Recebe os dados do webhook e faz o log inicial
-        data = webhook
-        
+    async def run(self, data: DeviceData) -> dict:
         # Salva o LOG no arquivo de logs
         workflow.logger.info(f"[INFO] Webhook received: {data}")
         
         #Envia Mensagem para o Telegram
         await send_message_telegram(f"Webhook received: {data}")
         
-        
         # Extrai informações principais do device enviadas pelo webhook
-        device_name_nbx = data['name']
-        device_platform = data['platform']['name']
-        device_mgmt = data['primary_ip4']['address']
+        device_name_nbx = data.name
+        device_platform = data.platform.name
+        device_mgmt = data.primary_ip4.address
         device_mgmt = device_mgmt.split("/")[0]
         
         # Estrutura com os dados do device
