@@ -16,20 +16,9 @@ HEADERS = {
 }
 
 @activity.defn
-async def get_device_restapi(device_id: int) -> dict:    
-<<<<<<< Updated upstream
-    try:
-        activity.logger.info(f"[INFO] url: {NETBOX_URL}")
-        activity.logger.info(f"[INFO] token: {NETBOX_TOKEN}")
-        url = f"{str(NETBOX_URL)}api/dcim/devices/{device_id}/"
-        response = requests.get(url=url, headers=HEADERS, verify=False)
-        activity.logger.info(f"Response: {response}")
-
-        response.raise_for_status()  # Garante que status HTTP é 200
-=======
+async def get_device_restapi(device_id: int) -> dict:
     """
     Atividade do Temporal para buscar informações de um device no NetBox.
->>>>>>> Stashed changes
 
     Args:
         device_id (int): ID do device no NetBox.
@@ -40,6 +29,8 @@ async def get_device_restapi(device_id: int) -> dict:
             - device_mgmt (str): Endereço IP de gerenciamento (IPv4 ou IPv6)
             - platform (str): Plataforma associada ao equipamento
     """
+
+
     try:
         # Monta a URL da requisição
         url = f"{str(NETBOX_URL)}api/dcim/devices/{device_id}/"
