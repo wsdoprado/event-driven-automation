@@ -1,3 +1,7 @@
+
+
+![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=http%3A%2F%2Fraw.githubusercontent.com%2Fwsdoprado%2Fevent-driven-automation%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
+
 # Curso - Semana de Capacitação 11 - NIC.br
 
 Este repositório contém os arquivos e instruções para o laboratório do curso da Semana de Capacitação do NIC.br.
@@ -57,9 +61,16 @@ interval: 30s
 retries: 5
 ```
 
+Para subir
 ```bash
-docker compose up ou docker compose up -d
+docker compose up
 ```
+ou
+```bash
+docker compose up -d
+```
+
+Definir ou alterar o usuário de acesso
 ```bash
 docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser
 ```
@@ -99,7 +110,7 @@ Baixe as imagens de Arista cEOS:
 📂 Google Drive - Imagens de Laboratório
  - https://drive.google.com/drive/folders/1uLDcgJuoxOE7c4ZD3WsPwLmvPrJKqeLE
 
-OBS: cEOS-lab-4.34.2F.tar.xz precisa estar no host do laboratorio. 
+OBS: cEOS-lab-4.34.2F.tar.xz precisa estar no host do laboratório.
 Dica: Transferir por SCP
 
 # Criando o container para Arista cEOS
@@ -108,7 +119,7 @@ Importe a imagem do Arista cEOS:
 docker import cEOS-lab-4.34.2F.tar.xz ceos:4.34.2F
 ```
 
-# Criando o laboratorio do curso
+# Criando o laboratório do curso
 Suba o laboratório de exemplo:
 ```bash
 containerlab deploy -t lab-semanacap.yml
@@ -124,19 +135,23 @@ Liste e inspecione laboratórios ativos:
 containerlab inspect --all
 ```
 
-## 🐍 Ambiente Python para execução dos scripts
 
-Para executar os scritps em python é necessário criar um ambiente virtual e instalar as dependências.
+## Ambiente para executar os exercícios
+### 🐍 Ambiente Python para execução dos scripts
+
+Para executar os scripts em python é necessário criar um ambiente virtual e instalar as dependências.
+Criar o ambiente virtual
 ```bash
 uv venv
 ```
+Ativar o ambiente virtual
 ```bash
 source .venv/bin/activate
 ```
+Instalar ou atualizar as dependências dentro do ambiente virtual
 ```bash
 uv sync
 ```
-
 Sair do ambiente virtual
 ```bash
 deactivate
@@ -145,28 +160,22 @@ deactivate
 ## 🖥️ Iniciando os Exercícios de Automação de Rede
 
 Criar um arquivo .env.dev na raiz do projeto
+dentro das pastas exercicio_temporal e também posteriormente projeto_completo
 ```bash
-# Arquivo: .env.dev
-# URL do NetBox (ex.: http://localhost:8000)
-NETBOX_URL=http://localhost:8000
-
-# Token de API do NetBox
-NETBOX_TOKEN=seu_token_aqui
-
-# Usuário SSH dos dispositivos
-USER_DEVICE=admin
-
-# Senha SSH dos dispositivos
-PASSW_DEVICE=sua_senha_aqui
-
-
-# CHATID para Grupo no Telegram
-CHAT_ID=
-
-
-# Token do BOT Telegram
-BOT_TOKEN=
+cp .env.dev.example .env.dev
 ```
+E modificar os dados de acordo
+
+## 🖥️ Iniciando os Exercícios do FastAPI e webhook no Netbox
+Para o exercício do FastAPI, ter o ambiente virtual python ativado a instância do Netbox
+e subir o containers da API dentro da pasta exercicio_fastapi.
+```bash
+docker compose pull
+```
+```bash
+docker compose up --build -d
+```
+
 
 ## 🧩 Temporal
 

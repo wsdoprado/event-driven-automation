@@ -7,12 +7,7 @@ from temporalio.exceptions import ApplicationError
 with workflow.unsafe.imports_passed_through():
     from activities.device.arista_ceos import get_config, change_hostname_pyeapi, change_hostname_netconf
     from activities.remote.telegram import send_message
-    from utils import DeviceData
-
-# Constantes de timeout (em segundos)
-TIMEOUT_ACTIVITY = 120  # Tempo limite para atividades genéricas
-TIMEOUT_NETBOX = 120    # Tempo limite específico para operações no NetBox
-TIMEOUT_DEVICE = 360    # Tempo limite para operações em dispositivos de rede
+    from utils import DeviceData, TIMEOUT_ACTIVITY, TIMEOUT_DEVICE
 
 # Política padrão de retry para atividades no Temporal
 RETRY_POLICY_DEFAULT = RetryPolicy(

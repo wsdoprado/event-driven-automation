@@ -95,8 +95,8 @@ def get_data_device(device_id=None):
 # Execução principal do script
 # ----------------------------------------------
 if __name__ == "__main__":
-    # Chama a função para obter o device com ID 27
-    data = get_data_device(27)
+    # Chama a função para obter o device com ID 1
+    data = get_data_device()
     
     # Se houver dados retornados
     if data:

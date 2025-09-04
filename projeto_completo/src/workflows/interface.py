@@ -9,12 +9,7 @@ with workflow.unsafe.imports_passed_through():
     from activities.netbox.restapi import get_device_restapi
     from activities.netbox.graphql import get_device_graphql
     from activities.remote.telegram import send_message
-    from utils import InterfaceData
-    
-# Constantes de timeout (em segundos)
-TIMEOUT_ACTIVITY = 120  # Tempo limite para atividades genéricas
-TIMEOUT_NETBOX = 120    # Tempo limite específico para operações no NetBox
-TIMEOUT_DEVICE = 360    # Tempo limite para operações em dispositivos de rede
+    from utils import InterfaceData, TIMEOUT_ACTIVITY, TIMEOUT_DEVICE, TIMEOUT_NETBOX
 
 # Política padrão de retry para atividades no Temporal
 RETRY_POLICY_DEFAULT = RetryPolicy(
@@ -97,7 +92,7 @@ class InterfaceWorkflow:
         results_device_nbx = await workflow.execute_activity(
             get_device_restapi,
             args=[iface_device_id],
-            start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
+            start_to_close_timeout=timedelta(seconds=TIMEOUT_NETBOX),
             retry_policy=RETRY_POLICY_DEFAULT,  
         )
         

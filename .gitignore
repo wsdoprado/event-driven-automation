@@ -206,12 +206,6 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-
-.env.dev
-# Temporal .env exception
-!temporal/.env
-!projeto_completo/.env
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -425,6 +419,7 @@ __marimo__/
 # Temporal .env exception
 !temporal/.env
 !projeto_completo/.env
+!exercicio_temporal/.env
 
 # Ignorar arquivos nvram e configs de laboratório
 containerlab/clab-semanacap11/

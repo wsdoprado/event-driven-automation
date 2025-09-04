@@ -2,6 +2,12 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+# Constantes de timeout (em segundos)
+TIMEOUT_ACTIVITY = 120  # Tempo limite para atividades genéricas
+TIMEOUT_NETBOX = 120    # Tempo limite específico para operações no NetBox
+TIMEOUT_DEVICE = 360    # Tempo limite para operações em dispositivos de rede
+
+
 #Modelos de representação do Netbox
 class DeviceType(BaseModel):
     id: int
