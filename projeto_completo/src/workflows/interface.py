@@ -16,7 +16,8 @@ RETRY_POLICY_DEFAULT = RetryPolicy(
     initial_interval=timedelta(seconds=10),     # Espera antes da primeira tentativa de retry
     backoff_coefficient=2.0,                    # Fator de multiplicação para o backoff exponencial (10s, 20s, 40s, etc.)
     maximum_interval=timedelta(seconds=120),    # Intervalo máximo entre tentativas
-    maximum_attempts=50                         # Número máximo de tentativas (inclui a primeira execução)
+    maximum_attempts=50,                         # Número máximo de tentativas (inclui a primeira execução)
+    non_retryable_error_types=["ValueError"],
 )
 
 # Função auxiliar para enviar mensagens via Telegram (atividade assíncrona no Temporal)
@@ -151,7 +152,8 @@ class InterfaceWorkflow:
                                 apply_interface_config,
                                 args=[results_device_nbx,iface_nbx['iface_name'],diff],
                                 start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
-                                retry_policy=RETRY_POLICY_DEFAULT,  
+                                retry_policy=RETRY_POLICY_DEFAULT,
+
                         )
                         
                         # Se a atividade funcionou 
