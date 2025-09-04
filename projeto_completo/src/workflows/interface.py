@@ -5,7 +5,7 @@ from temporalio.exceptions import ApplicationError
 
 # Importação especial para permitir chamadas a módulos externos dentro do workflow do Temporal
 with workflow.unsafe.imports_passed_through():
-    from activities.device.arista_ceos import get_config, change_hostname, apply_interface_config
+    from activities.device.arista_ceos import get_config, apply_interface_config
     from activities.netbox.restapi import get_device_restapi
     from activities.netbox.graphql import get_device_graphql
     from activities.remote.telegram import send_message
@@ -120,7 +120,7 @@ class InterfaceWorkflow:
 
             # Coleta o hostname retornado pelo device
             device_name = device_results['data']['facts']['hostname']
-            
+
             # Caso o hostname do device seja igual ao registrado no NetBox
             if device_name == iface_device_name:
                 # Caso a Interface do Netbox exista no Device

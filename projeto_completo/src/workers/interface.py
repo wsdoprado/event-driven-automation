@@ -3,7 +3,7 @@ from temporalio.worker import Worker
 from temporalio.client import Client
 
 # Atividades externas que o worker pode executar
-from activities.device.arista_ceos import get_config, change_hostname, apply_interface_config
+from activities.device.arista_ceos import get_config, apply_interface_config
 from activities.netbox.restapi import get_device_restapi
 from activities.netbox.graphql import get_device_graphql
 from activities.remote.telegram import send_message
@@ -46,7 +46,6 @@ async def main():
         workflows=[InterfaceWorkflow],   # Workflow associado
         activities=[
             get_config,                  # Atividade: obter configuração do dispositivo
-            change_hostname,             # Atividade: alterar hostname do dispositivo
             apply_interface_config,      # Atividade: alterar parametros de interface no dispositivo
             get_device_restapi,          # Atividade: coletados dados no netbox usando REST API
             get_device_graphql,          # Atividade: coletados dados no netbox usando GRAPHQL

@@ -3,7 +3,7 @@ from temporalio.worker import Worker
 from temporalio.client import Client
 
 # Atividades externas que o worker pode executar
-from activities.device.arista_ceos import get_config, change_hostname
+from activities.device.arista_ceos import get_config, change_hostname_pyeapi, change_hostname_netconf
 from activities.remote.telegram import send_message
 
 # Workflow associado a este worker
@@ -44,7 +44,8 @@ async def main():
         workflows=[DeviceWorkflow],      # Workflow associado
         activities=[
             get_config,                  # Atividade: obter configuração do dispositivo
-            change_hostname,             # Atividade: alterar hostname do dispositivo
+            change_hostname_pyeapi,      # Atividade: alterar hostname do dispositivo - PyeAPI
+            change_hostname_netconf,     # Atividade: alterar hostname do dispositivo - NETCONF
             send_message                 # Atividade: enviar notificação (Telegram)
         ],
     )

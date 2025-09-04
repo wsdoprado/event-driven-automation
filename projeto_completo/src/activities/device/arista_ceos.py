@@ -1,5 +1,6 @@
 from temporalio import activity
 from napalm import get_network_driver
+from ncclient import manager
 import os, logging
 import pyeapi
 
@@ -50,7 +51,7 @@ async def get_config(device: dict) -> dict:
     return results
 
 @activity.defn
-async def change_hostname(device: dict, newhostname: str) -> dict:
+async def change_hostname_pyeapi(device: dict, newhostname: str) -> dict:
     """
     Altera o hostname de um device Arista via API (pyeapi).
 
@@ -86,7 +87,54 @@ async def change_hostname(device: dict, newhostname: str) -> dict:
         raise Exception(f"Erro ao pegar config de {device}: {e}")
 
     return results
-     
+
+@activity.defn
+async def change_hostname_netconf(device: dict, newhostname: str) -> dict:
+    """
+    Altera o hostname de um device Arista via NETCONF.
+
+    Args:
+        device (dict): Dicionário com dados do device (inclui 'device_mgmt').
+        newhostname (str): Novo hostname a ser configurado.
+
+    Returns:
+        dict: Estrutura com:
+            - data: None
+            - status: True se sucesso, False caso contrário
+    """
+    results = {"data": None, "status": False}
+
+    try:
+        DEVICE = {
+            "host": device["device_mgmt"],
+            "port": 830,
+            "username": USER_DEVICE,
+            "password": PASSW_DEVICE,
+            "hostkey_verify": False,
+        }
+
+        config_payload = f"""
+        <config>
+            <system xmlns="http://openconfig.net/yang/system">
+                <config>
+                <hostname>{newhostname}</hostname>
+                </config>
+            </system>
+        </config>
+        """
+
+        with manager.connect(**DEVICE) as m:
+            m.edit_config(target="running", config=config_payload)
+            print(f"Hostname alterado para {newhostname}")
+
+
+        results = {"data": None, "status": True}
+    
+    except Exception as e:
+        activity.logger.error(f"Erro ao trocar hostname {device}: {e}")
+        raise Exception(f"Erro ao pegar config de {device}: {e}")
+
+    return results     
     
 @activity.defn
 async def apply_interface_config(device: dict, iface: str, diff: dict) -> dict:

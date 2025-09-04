@@ -5,7 +5,7 @@ from temporalio.exceptions import ApplicationError
 
 # Importação especial para permitir chamadas a módulos externos dentro do workflow do Temporal
 with workflow.unsafe.imports_passed_through():
-    from activities.device.arista_ceos import get_config, change_hostname
+    from activities.device.arista_ceos import get_config, change_hostname_pyeapi, change_hostname_netconf
     from activities.remote.telegram import send_message
     from utils import DeviceData
 
@@ -88,7 +88,8 @@ class DeviceWorkflow:
                 
                 # Executa a atividade de troca de hostname
                 results_change_hostname = await workflow.execute_activity(
-                    change_hostname,
+                    #change_hostname_pyeapi,
+                    change_hostname_netconf,
                     args=[device,device_name_nbx],
                     start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
                     retry_policy=RETRY_POLICY_DEFAULT,  
