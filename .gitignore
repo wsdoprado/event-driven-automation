@@ -428,3 +428,5 @@ __marimo__/
 
 # Ignorar arquivos nvram e configs de laboratório
 containerlab/clab-semanacap11/
+
+logs/
