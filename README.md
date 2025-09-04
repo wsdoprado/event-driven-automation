@@ -13,7 +13,7 @@ Este repositório contém os arquivos e instruções para o laboratório do curs
 Antes de começar, certifique-se de que o sistema possui:
 
 - **Linux (Debian 12.10.0 netinst instalação limpa) - 1 host [32G RAM(ou mais), 50G Disco, 8vcpu (ou mais)]**
-- Acesso a Internet para Download de Arquivos 
+- Acesso a Internet para download de arquivos 
   
 ## 🚀 Instalação das Dependências
 
@@ -161,6 +161,14 @@ uv sync
 Sair do ambiente virtual
 ```bash
 deactivate
+```
+## Populando e consumindo dados do netbox (exercicio_netbox)
+
+
+Para popular o netbox e realizar as requisições do exercicio de netbox (REST e GraphQL)
+Dentro da pasta exercicio_netbox e com o ambiente virtual python ativado.
+```bash
+cp .env.example .env
 ```
 
 ## 🖥️ Iniciando os Exercícios de Automação de Rede
