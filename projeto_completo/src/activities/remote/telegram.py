@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream
-import asyncio
-
-import requests
-import os
-from temporalio import activity
-
-=======
 import requests
 import asyncio
 import os
 from temporalio import activity
 
 # Carrega variáveis de ambiente
->>>>>>> Stashed changes
 CHAT_ID = os.getenv("CHAT_ID")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 

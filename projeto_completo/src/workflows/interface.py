@@ -30,7 +30,7 @@ async def send_message_telegram(text: str) -> None:
         await workflow.execute_activity(
             send_message,                      # Atividade que realmente envia a mensagem
             text,                              # Texto da mensagem
-            schedule_to_close_timeout=timedelta(seconds=TIMEOUT_ACTIVITY), # Timeout da execução
+            start_to_close_timeout=timedelta(seconds=TIMEOUT_ACTIVITY), # Timeout da execução
         )
     except Exception as e:
         # Caso falhe, levanta um erro que pode ser tratado pelo workflow
@@ -97,7 +97,7 @@ class InterfaceWorkflow:
         results_device_nbx = await workflow.execute_activity(
             get_device_restapi,
             args=[iface_device_id],
-            schedule_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
+            start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
             retry_policy=RETRY_POLICY_DEFAULT,  
         )
         
@@ -114,7 +114,7 @@ class InterfaceWorkflow:
             device_results = await workflow.execute_activity(
                     get_config,
                     args=[results_device_nbx],
-                    schedule_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
+                    start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
                     retry_policy=RETRY_POLICY_DEFAULT,  
             )
 
@@ -155,7 +155,7 @@ class InterfaceWorkflow:
                         device_config_results = await workflow.execute_activity(
                                 apply_interface_config,
                                 args=[results_device_nbx,iface_nbx['iface_name'],diff],
-                                schedule_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
+                                start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
                                 retry_policy=RETRY_POLICY_DEFAULT,  
                         )
                         

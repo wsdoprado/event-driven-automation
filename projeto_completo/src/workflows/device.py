@@ -28,7 +28,7 @@ async def send_message_telegram(text: str) -> None:
         await workflow.execute_activity(
             send_message,                      # Atividade que realmente envia a mensagem
             text,                              # Texto da mensagem
-            schedule_to_close_timeout=timedelta(seconds=TIMEOUT_ACTIVITY), # Timeout da execução
+            start_to_close_timeout=timedelta(seconds=TIMEOUT_ACTIVITY), # Timeout da execução
         )
     except Exception as e:
         # Caso falhe, levanta um erro que pode ser tratado pelo workflow
@@ -71,7 +71,7 @@ class DeviceWorkflow:
             device_results = await workflow.execute_activity(
                     get_config,
                     args=[device],
-                    schedule_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
+                    start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
                     retry_policy=RETRY_POLICY_DEFAULT,  
             )
             
@@ -90,7 +90,7 @@ class DeviceWorkflow:
                 results_change_hostname = await workflow.execute_activity(
                     change_hostname,
                     args=[device,device_name_nbx],
-                    schedule_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
+                    start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
                     retry_policy=RETRY_POLICY_DEFAULT,  
                 )
                 
