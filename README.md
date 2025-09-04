@@ -144,9 +144,9 @@ deactivate
 
 ## 🖥️ Iniciando os Exercícios de Automação de Rede
 
-Criar um arquivo .env na raiz do projeto
+Criar um arquivo .env.dev na raiz do projeto
 ```bash
-# Arquivo: .env
+# Arquivo: .env.dev
 # URL do NetBox (ex.: http://localhost:8000)
 NETBOX_URL=http://localhost:8000
 
@@ -158,6 +158,14 @@ USER_DEVICE=admin
 
 # Senha SSH dos dispositivos
 PASSW_DEVICE=sua_senha_aqui
+
+
+# CHATID para Grupo no Telegram
+CHAT_ID=
+
+
+# Token do BOT Telegram
+BOT_TOKEN=
 ```
 
 ## 🧩 Temporal
