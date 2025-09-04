@@ -74,7 +74,8 @@ class DeviceWorkflow:
                     get_config,
                     args=[device],
                     start_to_close_timeout=timedelta(seconds=TIMEOUT_DEVICE),
-                    retry_policy=RETRY_POLICY_DEFAULT,  
+                    retry_policy=RETRY_POLICY_DEFAULT,
+                    # error="error"
             )
             
             # Coleta o hostname retornado pelo device
