@@ -59,7 +59,7 @@ async def get_device_restapi(device_id: int) -> dict:
             # Remove a máscara de rede (ex.: transforma 192.168.100.100/32 em 192.168.100.100)
             management_ip = management_ip.split("/")[0]
             
-         # Plataforma associada (ex.: IOS-XR, Arista EOS, etc.)
+        # Plataforma associada (ex.: IOS-XR, Arista EOS, etc.)
         platform = None
         if json_data.get("platform"):
             platform = json_data["platform"].get("name")
