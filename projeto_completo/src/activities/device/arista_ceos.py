@@ -159,6 +159,8 @@ async def apply_interface_config(device: dict, iface: str, diff: dict) -> dict:
     """
     results = {"data": None, "status": False}
 
+    raise ValueError("Valor inesperado")
+
     try:
         # Conexão com o equipamento via eAPI
         conn = pyeapi.connect(
@@ -171,7 +173,7 @@ async def apply_interface_config(device: dict, iface: str, diff: dict) -> dict:
         node = pyeapi.client.Node(conn)
         
         config_cmds = []
-        
+
         # Diferença em description
         if "description" in diff:
             desc = diff["description"]["nbx"]
