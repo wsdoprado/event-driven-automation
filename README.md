@@ -42,13 +42,19 @@ O NetBox será utilizado como fonte da verdade - NSOT
 
 ```bash
 git clone -b release https://github.com/netbox-community/netbox-docker.git
+```
+```bash
 cd netbox-docker
+```
+```bash
 tee docker-compose.override.yml <<EOF
 services:
   netbox:
     ports:
       - 8000:8080
 EOF
+```
+```bash
 docker compose pull
 ```
 
