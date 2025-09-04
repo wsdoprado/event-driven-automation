@@ -1,36 +1,51 @@
-import json
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI
+from typing import Optional
+from pydantic import BaseModel
 
 # Instância do FastAPI
 app = FastAPI(title="NetBox Webhook Receiver", version="1.0")
 
+
+#Modelos de representação do Netbox
+class DeviceType(BaseModel):
+    id: int
+    model: str
+
+class Site(BaseModel):
+    id: int
+    name: str
+
+class DeviceData(BaseModel):
+    id: int
+    name: str
+    device_type: DeviceType
+    site: Site
+    description: Optional[str] = None
+
+# Modelo principal do webhook
+class NetBoxWebhook(BaseModel):
+    event: str
+    model: str
+    timestamp: str
+    username: Optional[str]
+    request_id: Optional[str]
+    data: DeviceData
+
+
 @app.post("/webhook/netbox")
-async def receive_netbox_webhook(request: Request):
+async def receive_netbox_webhook(payload: NetBoxWebhook):
     """
     Endpoint para receber webhooks do NetBox.
 
-    Exemplo de payload esperado:
+    Exemplo de payload esperado em json:
     {
         "model": "dcim.device",
         "event": "created",
         "data": { ... informações do objeto ... }
     }
     """
-    try:
-        # Recebe o corpo da requisição como JSON
-        payload = await request.json()
-        print(f"Webhook Recebido ") 
-        
-        # Extrair campos principais
-        model = payload.get("model")
-        event = payload.get("event")
-        data = payload.get("data")
-        
-        print(f"Data: {json.dumps(data, indent=2)}") 
-        # Validação básica
-        if not model or not event or not data:
-            raise HTTPException(status_code=400, detail="Payload incompleto.")
-        
-    except Exception as e:
-        print(f"Erro ao processar webhook: {e}")
-        raise HTTPException(status_code=500, detail="Erro interno ao processar webhook.")
+
+    print(f"Evento recebido: {payload.event}")
+    print(f"Modelo afetado: {payload.model}")
+    print(f"Usuário envolvido: {payload.username}")
+    print(f"Dados do modelo: {payload.data}")
