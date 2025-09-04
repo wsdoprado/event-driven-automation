@@ -6,7 +6,7 @@ import urllib3
 urllib3.disable_warnings()
 
 # URL do NetBox (ex.: http://localhost:8000)
-NETBOX_URL=https://192.168.246.25/
+NETBOX_URL="https://192.168.246.25/"
 
 # Token de API do NetBox
 NETBOX_TOKEN="3e99f8519cf5467ee3f7b76c661240a317b4fd40"
