@@ -8,7 +8,7 @@ Este repositório contém os arquivos e instruções para o laboratório do curs
 
 Antes de começar, certifique-se de que o sistema possui:
 
-- **Linux (Debian 12.10.0 netinst instalação limpa) - 3 hosts [netbox, automation, containerlab]**
+- **Linux (Debian 12.10.0 netinst instalação limpa) - 1 hosts [32G RAM(ou mais), 50G Disco, 8vcpu (ou mais)]**
 - Acesso a Internet para Download de Arquivos 
   
 ## 🚀 Instalação das Dependências
