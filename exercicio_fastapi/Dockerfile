@@ -15,4 +15,5 @@ COPY . .
 EXPOSE 9000
 
 # Inicia o FastAPI com uvicorn apontando para api_netbox_cache.py
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9000"]
+CMD ["uvicorn", "main_com_pydantic:app", "--host", "0.0.0.0", "--port", "9000"]
+#CMD ["uvicorn", "main_sem_pydantic:app", "--host", "0.0.0.0", "--port", "9000"]
