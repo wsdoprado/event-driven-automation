@@ -11,10 +11,10 @@ with workflow.unsafe.imports_passed_through():
 
 # Política padrão de retry para atividades no Temporal
 RETRY_POLICY_DEFAULT = RetryPolicy(
-    initial_interval=timedelta(seconds=10),     # Espera antes da primeira tentativa de retry
-    backoff_coefficient=2.0,                    # Fator de multiplicação para o backoff exponencial (10s, 20s, 40s, etc.)
-    maximum_interval=timedelta(seconds=120),    # Intervalo máximo entre tentativas
-    maximum_attempts=50                         # Número máximo de tentativas (inclui a primeira execução)
+    initial_interval=timedelta(seconds=1),     # Espera antes da primeira tentativa de retry
+    backoff_coefficient=1.0,                    # Fator de multiplicação para o backoff exponencial (10s, 20s, 40s, etc.)
+    maximum_interval=timedelta(seconds=1),    # Intervalo máximo entre tentativas
+    maximum_attempts=3                         # Número máximo de tentativas (inclui a primeira execução)
 )
 
 # Função auxiliar para enviar mensagens via Telegram (atividade assíncrona no Temporal)
@@ -57,6 +57,8 @@ class DeviceWorkflow:
             "device_platform": device_platform, 
             "device_mgmt": device_mgmt
         }
+
+        # await workflow.sleep(30)
         
         # Se o equipamento for da plataforma Arista EOS
         if device_platform == "eos":

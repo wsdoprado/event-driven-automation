@@ -62,7 +62,7 @@ async def receive_netbox_webhook(payload: NetBoxWebhook):
     logger.info("[INFO] FastAPI inicializado.")
     logger.info(f"[INFO] Esperando 10 segundos antes de conectar ao Temporal em: {TEMPORAL_ADDRESS}")
 
-    await asyncio.sleep(10)  # aguarda 10 segundos
+    # await asyncio.sleep(10)  # aguarda 10 segundos
 
     # Client para conexao no temporal
     temporal_client = await Client.connect(TEMPORAL_ADDRESS, namespace=TEMPORAL_NAMESPACE)
