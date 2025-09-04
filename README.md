@@ -95,7 +95,7 @@ docker compose up ou docker compose -d
 
 ## 🧪 Laboratório com Containerlab
 
-Baixe as imagens de Arista e Cisco IOS:
+Baixe as imagens de Arista cEOS:
 📂 Google Drive - Imagens de Laboratório
  - https://drive.google.com/drive/folders/1uLDcgJuoxOE7c4ZD3WsPwLmvPrJKqeLE
 
