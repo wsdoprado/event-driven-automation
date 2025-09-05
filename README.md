@@ -94,8 +94,8 @@ mkdir -p /opt/event-driven-automation/exercicio_nginx/certs
 
 ```bash
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /opt/event-driven-automation/nginx/certs/privkey.pem \
-  -out /opt/event-driven-automation/nginx/certs/fullchain.pem \
+  -keyout /opt/event-driven-automation/exercicio_nginx/certs/privkey.pem \
+  -out /opt/event-driven-automation/exercicio_nginx/certs/fullchain.pem \
   -subj "/CN=localhost"
 ```
 
