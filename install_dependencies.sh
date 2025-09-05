@@ -35,6 +35,6 @@ docker compose version
 # Containerlab
 curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
 
-sudo usermod -aG clab_admins ${USER} && newgrp clab_admins
+#sudo usermod -aG clab_admins ${USER} && newgrp clab_admins
 
 
