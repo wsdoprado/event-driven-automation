@@ -89,7 +89,7 @@ O NetBox estará disponível em:
 
 Crie a pasta para os certificados:
 ```bash
-mkdir -p /opt/event-driven-automation/nginx/certs
+mkdir -p /opt/event-driven-automation/exercicio_nginx/certs
 ```
 
 ```bash
