@@ -21,6 +21,12 @@ echo \
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH=$PATH:/root/.local/bin
 
+# Atualizar pacotes
+sudo apt update -y
+
+# Instalar python3 no host
+sudo apt install -y python3 python3-venv python3-pip
+
 # Docker e Docker Compose
 sudo apt update -y
 sudo apt install -y docker-ce 
