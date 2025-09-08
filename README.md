@@ -102,7 +102,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 Alterar IP Address em /opt/event-driven-automation/nginx/conf.d/default.conf
 
 ```bash
-nano /opt/event-driven-automation/nginx/conf.d/default.conf
+nano /opt/event-driven-automation/exercicio_nginx/conf.d/default.conf
 ```
 
 Subindo o container do NGINX
