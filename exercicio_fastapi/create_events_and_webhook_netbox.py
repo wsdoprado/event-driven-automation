@@ -3,15 +3,16 @@ import pynetbox
 from dotenv import load_dotenv
 
 
-# Carregar variáveis de ambiente do arquivo .env
-load_dotenv()
-
-urllib3.disable_warnings()
+# Carregar variáveis de ambiente do arquivo .env.dev
+load_dotenv("../.env.dev")
 
 NETBOX_URL = os.getenv("NETBOX_URL")
 NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
-API_URL = os.getenv("API_URL")  # The target webhook URL
+API_URL = os.getenv("API_URL")
 API_URL = f"{API_URL}/webhook/netbox"
+
+# Desabilita avisos de segurança SSL/TLS (não recomendado em produção)
+urllib3.disable_warnings() #não mostra warnings de segurança relacionados a SSL/TLS
 
 # Conecta ao Netbox
 nb = pynetbox.api(NETBOX_URL, token=NETBOX_TOKEN)

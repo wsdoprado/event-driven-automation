@@ -163,23 +163,14 @@ Sair do ambiente virtual
 ```bash
 deactivate
 ```
-## Populando e consumindo dados do netbox (exercicio_netbox)
-
-
-Para popular o netbox e realizar as requisições do exercicio de netbox (REST e GraphQL)
-Dentro da pasta exercicio_netbox e com o ambiente virtual python ativado.
-```bash
-cp .env.example .env
-```
 
 ## 🖥️ Iniciando os Exercícios de Automação de Rede
 
-Criar um arquivo .env.dev na raiz do projeto
-dentro das pastas exercicio_temporal e também posteriormente projeto_completo
+Criar um arquivo .env.dev na raiz do projeto. E modificar os dados de acordo
 ```bash
 cp .env.dev.example .env.dev
 ```
-E modificar os dados de acordo
+Esse arquivo será utilizado tanto nos exercícios quanto no projeto completo para fornecer os dados de acesso entre os serviços.
 
 ## 🖥️ Iniciando os Exercícios do FastAPI e webhook no Netbox
 Para o exercício do FastAPI, ter o ambiente virtual python ativado a instância do Netbox

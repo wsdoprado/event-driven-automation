@@ -1,11 +1,19 @@
 from ncclient import manager
 from xml.dom import minidom
+import os
+from dotenv import load_dotenv
+
+# Carregar variáveis de ambiente do arquivo .env.dev
+load_dotenv("../.env.dev")
+
+USER_DEVICE = os.getenv("USER_DEVICE")
+PASSW_DEVICE = os.getenv("PASSW_DEVICE")
 
 DEVICE = {
     "host": "192.168.100.103",
     "port": 830,
-    "username": "admin",
-    "password": "admin",
+    "username": f"{USER_DEVICE}",
+    "password": f"{PASSW_DEVICE}",
     "hostkey_verify": False,
 }
 

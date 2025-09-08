@@ -86,7 +86,7 @@ services:
         uv_files: ../
     command: python -m workers.device
     env_file:
-      - .env.dev
+      - ../.env.dev
     environment:
       - TEMPORAL_ADDRESS=temporal:7233
     depends_on:
@@ -105,7 +105,7 @@ services:
         uv_files: ../
     command: python -m workers.interface
     env_file:
-      - .env.dev
+      - ../.env.dev
     environment:
       - TEMPORAL_ADDRESS=temporal:7233
     depends_on:

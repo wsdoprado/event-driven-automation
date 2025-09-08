@@ -2,13 +2,14 @@ import os, requests, urllib3
 from dotenv import load_dotenv
 import pynetbox
 
-# Carregar variáveis de ambiente do arquivo .env
-load_dotenv()
-
-urllib3.disable_warnings()
+# Carregar variáveis de ambiente do arquivo .env.dev
+load_dotenv("../.env.dev")
 
 NETBOX_URL = os.getenv("NETBOX_URL")
 NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
+
+# Desabilita avisos de segurança SSL/TLS (não recomendado em produção)
+urllib3.disable_warnings() #não mostra warnings de segurança relacionados a SSL/TLS
 
 if not NETBOX_URL or not NETBOX_TOKEN:
     raise ValueError("Por favor, configure as variáveis NETBOX_URL e NETBOX_TOKEN no .env")

@@ -1,15 +1,16 @@
 import os
 import requests
 import urllib3
+from dotenv import load_dotenv
+
+# Carregar variáveis de ambiente do arquivo .env.dev
+load_dotenv("../.env.dev")
+
+NETBOX_URL = os.getenv("NETBOX_URL")
+NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
 
 # Desabilita avisos de segurança SSL/TLS (não recomendado em produção)
 urllib3.disable_warnings()
-
-# URL do NetBox (ex.: http://localhost:8000)
-NETBOX_URL="https://192.168.246.25/"
-
-# Token de API do NetBox
-NETBOX_TOKEN="3e99f8519cf5467ee3f7b76c661240a317b4fd40"
 
 # Headers padrão para requisições GraphQL/REST API
 HEADERS = {
