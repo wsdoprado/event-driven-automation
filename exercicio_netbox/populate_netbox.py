@@ -25,7 +25,6 @@ nb.http_session = session
 
 # Criar fabricantes
 manufacturers = [
-    {"name": "Cisco", "slug": "cisco"},
     {"name": "Arista", "slug": "arista"}
 ]
 
@@ -41,7 +40,6 @@ for m in manufacturers:
 
 # Criar plataformas
 platforms = [
-    {"name": "ios", "slug": "ios"},
     {"name": "eos", "slug": "eos"}
 ]
 
@@ -77,7 +75,8 @@ sites = [
     {"name": "POP-SP", "slug": "pop-sp", "region": "sp"},
     {"name": "POP-RJ", "slug": "pop-rj", "region": "rj"},
     {"name": "POP-CE", "slug": "pop-ce", "region": "ce"},
-    {"name": "POP-MG", "slug": "pop-mg", "region": "mg"}
+    {"name": "POP-MG", "slug": "pop-mg", "region": "mg"},
+    {"name": "POP-BA", "slug": "pop-ba", "region": "ba"}
 ]
 
 # Criar sites
@@ -100,8 +99,7 @@ for site_data in sites:
 # Criar roles: P, PE e L2
 roles = [
     {"name": "Spine", "slug": "spine", "color": "ff0000"},
-    {"name": "Leaf", "slug": "leaf", "color": "0000ff"},
-    {"name": "Host", "slug": "host", "color": "00ff00"},
+    {"name": "Leaf", "slug": "leaf", "color": "0000ff"}
 ]        
 
 role_ids = {}
@@ -132,18 +130,6 @@ for t in tenants:
                 
 # Criar tipos de dispositivos com interfaces
 device_types = [
-    {
-        "manufacturer": manufacturer_ids["cisco"],
-        "model": "Cisco IOS",
-        "slug": "cisco-ios",
-        "u_height": 1,
-        "interfaces": [
-            {"name": "Ethernet0/1", "type": "1000base-t"},
-            {"name": "Ethernet0/2", "type": "1000base-t"},
-            {"name": "Ethernet0/3", "type": "1000base-t"},
-            {"name": "Ethernet0/0", "type": "1000base-t", "mgmt_only": True}
-        ]
-    },
     {
         "manufacturer": manufacturer_ids["arista"],
         "model": "Arista CEOS",
@@ -195,10 +181,7 @@ devices_to_create = [
     {"name": "spine-02", "slug": "arista-ceos", "site": "pop-rj", "role": "spine", "mgmt_ip": "192.168.100.102/24", "tenant": "producao", "platform": "eos"},
     {"name": "leaf-01", "slug": "arista-ceos", "site": "pop-ce", "role": "leaf", "mgmt_ip": "192.168.100.103/24", "tenant": "producao", "platform": "eos"},
     {"name": "leaf-02", "slug": "arista-ceos", "site": "pop-mg", "role": "leaf", "mgmt_ip": "192.168.100.104/24", "tenant": "producao", "platform": "eos"},
-    {"name": "leaf-03", "slug": "arista-ceos", "site": "pop-sp", "role": "leaf", "mgmt_ip": "192.168.100.105/24", "tenant": "producao", "platform": "eos"},
-    {"name": "host-01", "slug": "cisco-ios", "site": "pop-rj", "role": "host", "mgmt_ip": "192.168.100.106/24", "tenant": "producao", "platform": "ios"},
-    {"name": "host-02", "slug": "cisco-ios", "site": "pop-ce", "role": "host", "mgmt_ip": "192.168.100.107/24", "tenant": "producao", "platform": "ios"},
-    {"name": "host-03", "slug": "cisco-ios", "site": "pop-mg", "role": "host", "mgmt_ip": "192.168.100.108/24", "tenant": "producao", "platform": "ios"}
+    {"name": "leaf-03", "slug": "arista-ceos", "site": "pop-ba", "role": "leaf", "mgmt_ip": "192.168.100.105/24", "tenant": "producao", "platform": "eos"}
 ]
 
 for dev in devices_to_create:
