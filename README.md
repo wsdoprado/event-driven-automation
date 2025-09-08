@@ -107,7 +107,7 @@ nano /opt/event-driven-automation/exercicio_nginx/conf.d/default.conf
 
 Subindo o container do NGINX
 ```bash
-cd  /opt/event-driven-automation/nginx
+cd  /opt/event-driven-automation/exercicio_nginx/
 docker compose up ou docker compose -d
 ```
 
