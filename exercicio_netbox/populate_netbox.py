@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import pynetbox
 
 # Carregar variáveis de ambiente do arquivo .env.dev
-load_dotenv("../.env.dev")
+load_dotenv("./.env.dev")
 
 NETBOX_URL = os.getenv("NETBOX_URL")
 NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
