@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import pynetbox
 
 # Carregar variáveis de ambiente do arquivo .env.dev
-load_dotenv("./.env.dev")
+load_dotenv("../.env.dev")
 
 NETBOX_URL = os.getenv("NETBOX_URL")
 NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
@@ -58,7 +58,8 @@ regions = [
     {"name": "Sao Paulo", "slug": "sp"},
     {"name": "Rio de Janeiro", "slug": "rj"},
     {"name": "Fortaleza", "slug": "ce"},
-    {"name": "Belo Horizonte", "slug": "mg"}
+    {"name": "Belo Horizonte", "slug": "mg"},
+    {"name": "Salvador", "slug": "ba"}
 ]
 
 # Criar regiões
@@ -212,7 +213,7 @@ for dev in devices_to_create:
         print(f"🆕 Device criado: {device.name} (ID {device.id})")
 
     # Determinar interface de gerenciamento
-    mgmt_iface_name = "Ethernet0/0" if "cisco" in dev["slug"] else "Management0"
+    mgmt_iface_name = "Management0"
     mgmt_iface = nb.dcim.interfaces.get(device_id=device.id, name=mgmt_iface_name)
     if not mgmt_iface:
         print(f"❌ Interface de gerenciamento {mgmt_iface_name} não encontrada no device {device.name}")
