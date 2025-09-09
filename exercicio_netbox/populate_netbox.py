@@ -178,11 +178,11 @@ for dt in device_types:
 
 # Devices + IPs de gerência
 devices_to_create = [
-    {"name": "spine-01", "slug": "arista-ceos", "site": "pop-sp", "role": "spine", "mgmt_ip": "192.168.100.101/24", "tenant": "producao", "platform": "eos"},
-    {"name": "spine-02", "slug": "arista-ceos", "site": "pop-rj", "role": "spine", "mgmt_ip": "192.168.100.102/24", "tenant": "producao", "platform": "eos"},
-    {"name": "leaf-01", "slug": "arista-ceos", "site": "pop-ce", "role": "leaf", "mgmt_ip": "192.168.100.103/24", "tenant": "producao", "platform": "eos"},
-    {"name": "leaf-02", "slug": "arista-ceos", "site": "pop-mg", "role": "leaf", "mgmt_ip": "192.168.100.104/24", "tenant": "producao", "platform": "eos"},
-    {"name": "leaf-03", "slug": "arista-ceos", "site": "pop-ba", "role": "leaf", "mgmt_ip": "192.168.100.105/24", "tenant": "producao", "platform": "eos"}
+    {"name": "spine-01", "slug": "arista-ceos", "site": "pop-sp", "role": "spine", "mgmt_ip": "192.168.100.101/24", "mgmt_ip6": "2001:db8:100::101/64", "tenant": "producao", "platform": "eos"},
+    {"name": "spine-02", "slug": "arista-ceos", "site": "pop-rj", "role": "spine", "mgmt_ip": "192.168.100.102/24", "mgmt_ip6": "2001:db8:100::102/64", "tenant": "producao", "platform": "eos"},
+    {"name": "leaf-01", "slug": "arista-ceos", "site": "pop-ce", "role": "leaf", "mgmt_ip": "192.168.100.103/24", "mgmt_ip6": "2001:db8:100::103/64", "tenant": "producao", "platform": "eos"},
+    {"name": "leaf-02", "slug": "arista-ceos", "site": "pop-mg", "role": "leaf", "mgmt_ip": "192.168.100.104/24", "mgmt_ip6": "2001:db8:100::104/64", "tenant": "producao", "platform": "eos"},
+    {"name": "leaf-03", "slug": "arista-ceos", "site": "pop-ba", "role": "leaf", "mgmt_ip": "192.168.100.105/24", "mgmt_ip6": "2001:db8:100::105/64", "tenant": "producao", "platform": "eos"}
 ]
 
 for dev in devices_to_create:
@@ -219,19 +219,42 @@ for dev in devices_to_create:
         print(f"❌ Interface de gerenciamento {mgmt_iface_name} não encontrada no device {device.name}")
         continue
 
-    # Criar ou buscar IP de gerenciamento
-    ip = nb.ipam.ip_addresses.get(address=dev["mgmt_ip"])
-    if not ip:
-        ip = nb.ipam.ip_addresses.create(
-            address=dev["mgmt_ip"],
-            assigned_object_type="dcim.interface",
-            assigned_object_id=mgmt_iface.id,
-            status="active"
-        )
-        print(f"🆕 IP {ip.address} associado a {device.name}:{mgmt_iface.name}")
-    else:
-        print(f"✅ IP {ip.address} já existe")
-
+    # Criar ou buscar IP de gerenciamento v4
+    ip4 = None
+    if dev.get("mgmt_ip"):
+        ip4 = nb.ipam.ip_addresses.get(address=dev["mgmt_ip"])
+        if not ip4:
+            ip4 = nb.ipam.ip_addresses.create(
+                address=dev["mgmt_ip"],
+                assigned_object_type="dcim.interface",
+                assigned_object_id=mgmt_iface.id,
+                status="active"
+            )
+            print(f"🆕 IPv4 {ip4.address} associado a {device.name}:{mgmt_iface.name}")
+        else:
+            print(f"✅ IPv4 {ip4.address} já existe")
+     
+    # Criar ou buscar IP de gerenciamento v6
+    ip6 = None
+    if dev.get("mgmt_ip6"):
+        ip6 = nb.ipam.ip_addresses.get(address=dev["mgmt_ip6"])
+        if not ip6:
+            ip6 = nb.ipam.ip_addresses.create(
+                address=dev["mgmt_ip6"],
+                assigned_object_type="dcim.interface",
+                assigned_object_id=mgmt_iface.id,
+                status="active"
+            )
+            print(f"🆕 IPv6 {ip6.address} associado a {device.name}:{mgmt_iface.name}")
+        else:
+            print(f"✅ IPv6 {ip6.address} já existe")
+                    
     # Marcar como IP principal do device
-    device.update({"primary_ip4": ip.id})
-    print(f"✅ IP {ip.address} marcado como IP principal do device {device.name}")
+    update_data = {}
+    if ip4:
+        update_data["primary_ip4"] = ip4.id
+    if ip6:
+        update_data["primary_ip6"] = ip6.id
+    if update_data:
+        device.update(update_data)
+        print(f"✅ Device {device.name} atualizado com IPs principais: {update_data}")
