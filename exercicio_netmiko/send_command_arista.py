@@ -10,7 +10,7 @@ PASSW_DEVICE = os.getenv("PASSW_DEVICE")
 
 device = {
     "device_type": "arista_eos",
-    "ip": "192.168.100.101",
+    "ip": "2001:db8:100::101",
     "username": f"{USER_DEVICE}",
     "password": f"{PASSW_DEVICE}",
 }
