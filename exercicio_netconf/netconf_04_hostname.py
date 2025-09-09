@@ -9,7 +9,7 @@ USER_DEVICE = os.getenv("USER_DEVICE")
 PASSW_DEVICE = os.getenv("PASSW_DEVICE")
 
 DEVICE = {
-    "host": "192.168.100.103",
+    "host": "2001:db8:100::101",
     "port": 830,
     "username": f"{USER_DEVICE}",
     "password": f"{PASSW_DEVICE}",
