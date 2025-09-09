@@ -1,3 +1,5 @@
+cd /opt/event-driven-automation
+
 apt install sudo -y
 
 # Atualizar pacotes
@@ -23,9 +25,6 @@ sudo apt install -y wget
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH=$PATH:/root/.local/bin
-
-# Atualizar pacotes
-sudo apt update -y
 
 # Docker e Docker Compose
 sudo apt update -y
