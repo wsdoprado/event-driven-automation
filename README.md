@@ -34,6 +34,7 @@ git clone https://github.com/wsdoprado/event-driven-automation.git
 Execute o script abaixo para instalar as dependências necessárias:
 
 ```bash
+cd /opt/event-driven-automation/
 ./install_dependencies.sh
 ```
 
