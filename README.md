@@ -192,7 +192,13 @@ docker compose up --build -d
 ## 🧩 Temporal
 
 O Temporal será utilizado para orquestração das atividades.
+
+```bash
+cd /opt/event-driven-automation/exercicio_temporal
+```
+
 Subir o Temporal
+
 ```bash
 docker compose pull
 ```
@@ -214,6 +220,15 @@ Execução do client com a solicitação de workflow (lembrando de está no ambi
 python client.py
 ```
 
+## 🧩 Projeto Finak
+
+```bash
+cd /opt/event-driven-automation/projeto_completo
+```
+
+```bash
+docker compose up --build -d | docker compose up --build 
+```
 
 
 
