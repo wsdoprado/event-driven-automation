@@ -149,7 +149,7 @@ containerlab inspect --all
 
 Para executar os scripts em python é necessário criar um ambiente virtual e instalar as dependências.
 
-Atualizar o path para usar o uv
+Por padrão, o uv é instalado em ~/.local/bin. Para poder usá-lo de qualquer lugar no terminal, é necessário adicionar esse diretório ao PATH.
 ```bash
 export PATH=$PATH:/root/.local/bin
 ```
