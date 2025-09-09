@@ -220,16 +220,28 @@ Execução do client com a solicitação de workflow (lembrando de está no ambi
 python client.py
 ```
 
-## 🧩 Projeto Finak
+## 🧩 Projeto Final
 
 ```bash
 cd /opt/event-driven-automation/projeto_completo
 ```
 
+Build/Ativar containers
 ```bash
 docker compose up --build -d | docker compose up --build 
 ```
+Parar containers
+```bash
+docker stop temporal-worker-interface-1 temporal-api-webhook-1 temporal-worker-device-1 temporal-admin-tools temporal-ui temporal temporal-postgresql 
+```
+Remover containers
+```bash
+docker rm temporal-worker-interface-1 temporal-api-webhook-1 temporal-worker-device-1 temporal-admin-tools temporal-ui temporal temporal-postgresql -f
+```
 
-
-
-  
+Verificar Logs em:
+```bash
+cat /opt/event-driven-automation/projeto_completo/logs/api/fastapi.log
+cat /opt/event-driven-automation/projeto_completo/logs/temporal/worker-device.log
+cat /opt/event-driven-automation/projeto_completo/logs/temporal/worker-interface.log
+```
