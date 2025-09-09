@@ -134,5 +134,6 @@ services:
 
 networks:
   temporal-network:
+    enable_ipv6: true
     driver: bridge
     name: temporal-network
