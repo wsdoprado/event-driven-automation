@@ -24,7 +24,6 @@ sudo apt install -y wget
 
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
-export PATH=$PATH:/root/.local/bin
 
 # Docker e Docker Compose
 sudo apt update -y
