@@ -43,7 +43,7 @@ class DeviceWorkflow:
         # Extrai informações principais do device enviadas pelo webhook
         device_name_nbx = data.name
         device_platform = data.platform.name
-        device_mgmt = data.primary_ip4.address
+        device_mgmt = data.primary_ip6.address
         device_mgmt = device_mgmt.split("/")[0]
         
         # Estrutura com os dados do device

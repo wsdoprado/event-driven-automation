@@ -50,10 +50,11 @@ async def get_device_restapi(device_id: int) -> dict:
         primary_ip6 = json_data.get("primary_ip6")
         
         management_ip = None
-        if primary_ip4 and "address" in primary_ip4:
-            management_ip = primary_ip4["address"]
-        elif primary_ip6 and "address" in primary_ip6:
+
+        if primary_ip6 and "address" in primary_ip6:
             management_ip = primary_ip6["address"]
+        elif primary_ip4 and "address" in primary_ip4:
+            management_ip = primary_ip4["address"]
             
         if management_ip:
             # Remove a máscara de rede (ex.: transforma 192.168.100.100/32 em 192.168.100.100)
@@ -63,14 +64,12 @@ async def get_device_restapi(device_id: int) -> dict:
         platform = None
         if json_data.get("platform"):
             platform = json_data["platform"].get("name")
-        
 
         return {
             "device_name": device_name,
             "device_mgmt": management_ip,
             "platform": platform,
         }
-        
 
     except requests.exceptions.HTTPError as http_err:
         activity.logger.info(f"[ERROR] HTTP error occurred: {http_err}")

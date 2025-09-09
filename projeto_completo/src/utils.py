@@ -30,6 +30,7 @@ class DeviceData(BaseModel):
     name: str
     platform: Optional[Platform] = None
     primary_ip4: Optional[IPAddress] = None
+    primary_ip6: Optional[IPAddress] = None
     device_type: Optional[DeviceType] = None
     site: Optional[Site] = None
     description: Optional[str] = None

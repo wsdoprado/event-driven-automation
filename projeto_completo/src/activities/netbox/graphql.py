@@ -42,6 +42,9 @@ async def get_device_graphql(device_id: int) -> dict:
             primary_ip4 {{
                 address
             }}
+            primary_ip6 {{
+                address
+            }}
             platform {{
                 name
             }}
@@ -77,11 +80,12 @@ async def get_device_graphql(device_id: int) -> dict:
         primary_ip6 = json_data["data"]["device"].get("primary_ip6")
         
         management_ip = None
-        if primary_ip4 and "address" in primary_ip4:
-            management_ip = primary_ip4["address"]
-        elif primary_ip6 and "address" in primary_ip6:
+
+        if primary_ip6 and "address" in primary_ip6:
             management_ip = primary_ip6["address"]
-            
+        elif primary_ip4 and "address" in primary_ip4:
+            management_ip = primary_ip4["address"]
+
         if management_ip:
             # Remove a máscara de rede (ex.: transforma 192.168.100.100/32 em 192.168.100.100)
             management_ip = management_ip.split("/")[0]
@@ -97,7 +101,6 @@ async def get_device_graphql(device_id: int) -> dict:
             "platform": platform,
         }
 
-    
     except requests.exceptions.HTTPError as http_err:
         activity.logger.info(f"[ERROR] HTTP error occurred: {http_err}")
         raise
