@@ -147,6 +147,11 @@ containerlab inspect --all
 ### 🐍 Ambiente Python para execução dos scripts
 
 Para executar os scripts em python é necessário criar um ambiente virtual e instalar as dependências.
+
+Atualizar o path para usar o uv
+```bash
+export PATH=$PATH:/root/.local/bin
+```
 Criar o ambiente virtual
 ```bash
 uv venv
