@@ -9,7 +9,7 @@ from activities.operations import generate_value_a, generate_value_b, result_sum
 class MakeSumOperationWorkflow:
     @workflow.run
     async def run(self) -> int:
-        workflow.logger.info("Running workflow RealizarOperacoesWorkflow")
+        workflow.logger.info("Running workflow MakeSumOperationWorkflow")
 
         value_a = await workflow.execute_activity(
             generate_value_a,
