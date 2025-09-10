@@ -43,6 +43,7 @@ cd /opt/event-driven-automation/
 O NetBox será utilizado como fonte da verdade - NSOT
 
 ```bash
+cd /opt
 git clone -b release https://github.com/netbox-community/netbox-docker.git
 ```
 ```bash
