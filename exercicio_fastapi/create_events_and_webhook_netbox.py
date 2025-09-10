@@ -28,9 +28,6 @@ else:
     webhook = nb.extras.webhooks.create(
         {
             "name": webhook_name,
-            "type_create": True,
-            "type_update": True,
-            "type_delete": True,
             "payload_url": API_URL,
             "http_method": "POST",
             "enabled": True,
