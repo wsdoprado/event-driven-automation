@@ -6,6 +6,7 @@ from workflows.workflow import MakeSumOperationWorkflow
 async def main():
     client = await Client.connect("localhost:7233")
 
+    # ou utilizando start_workflow
     result = await client.execute_workflow(
         MakeSumOperationWorkflow.run,
         id="operation-workflow-id",
