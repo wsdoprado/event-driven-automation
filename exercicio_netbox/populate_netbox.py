@@ -6,10 +6,14 @@ import pynetbox
 load_dotenv("../.env.dev")
 
 NETBOX_URL = os.getenv("NETBOX_URL")
-NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
-NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
 API_URL = os.getenv("API_URL")
+
+NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
+NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
 API_URL = f"{API_URL}/webhook/netbox"
+
+webhook_name = "FastAPIWebhook"
+existing_webhook = nb.extras.webhooks.get(name=webhook_name)
 
 # Desabilita avisos de segurança SSL/TLS (não recomendado em produção)
 urllib3.disable_warnings() #não mostra warnings de segurança relacionados a SSL/TLS
@@ -261,10 +265,6 @@ for dev in devices_to_create:
     if update_data:
         device.update(update_data)
         print(f"✅ Device {device.name} atualizado com IPs principais: {update_data}")
-
-
-webhook_name = "FastAPIWebhook"
-existing_webhook = nb.extras.webhooks.get(name=webhook_name)
 
 # Verifica se o webhook já existe
 if existing_webhook:
