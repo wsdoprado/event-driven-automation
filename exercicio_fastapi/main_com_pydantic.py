@@ -49,3 +49,8 @@ async def receive_netbox_webhook(payload: NetBoxWebhook):
     print(f"Modelo afetado: {payload.model}")
     print(f"Usuário envolvido: {payload.username}")
     print(f"Dados do modelo: {payload.data}")
+
+    # Em IDEs o Pydantic ajuda na validação em desenvolvimento
+    # soma = payload.data.id + 10
+    # soma = payload.data.id + "10"
+    # soma = payload.event + 10
