@@ -6,14 +6,8 @@ import pynetbox
 load_dotenv("../.env.dev")
 
 NETBOX_URL = os.getenv("NETBOX_URL")
-API_URL = os.getenv("API_URL")
-
-NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
 NETBOX_TOKEN = os.getenv("NETBOX_TOKEN")
 API_URL = f"{API_URL}/webhook/netbox"
-
-webhook_name = "FastAPIWebhook"
-existing_webhook = nb.extras.webhooks.get(name=webhook_name)
 
 # Desabilita avisos de segurança SSL/TLS (não recomendado em produção)
 urllib3.disable_warnings() #não mostra warnings de segurança relacionados a SSL/TLS
@@ -29,6 +23,9 @@ session.verify = False  # Desabilitar a verificação SSL
 nb = pynetbox.api(NETBOX_URL, token=NETBOX_TOKEN, )
 
 nb.http_session = session
+
+webhook_name = "FastAPIWebhook"
+existing_webhook = nb.extras.webhooks.get(name=webhook_name)
 
 # Criar fabricantes
 manufacturers = [
