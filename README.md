@@ -87,7 +87,7 @@ docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser
 O NetBox estará disponível em:
 👉 http://localhost:8000
 
-## 🌐 Nginx (HTTPS Proxy)
+## 🌐 Nginx (HTTPS Proxy) [EXTRA]
 
 Crie a pasta para os certificados:
 ```bash
