@@ -6,6 +6,18 @@
 
 Este repositório contém os arquivos e instruções para o laboratório do curso da Semana de Capacitação do NIC.br.
 
+
+**[Pré-requisitos](#-pré-requisitos) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Instalação das Dependências](#-instalação-das-dependências) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[NetBox (IPAM/DCIM)](#-netbox-ipamdcim) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Nginx (HTTPS Proxy)](#-nginx-https-proxy-extra) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Laboratório com Containerlab](#-laboratório-com-containerlab) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Ambiente para executar os exercícios](#ambiente-para-executar-os-exercícios) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Exercícios de Automação de Rede](#-iniciando-os-exercícios-de-automação-de-rede) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Exercícios do FastAPI e webhook no Netbox](#-iniciando-os-exercícios-do-fastapi-e-webhook-no-netbox) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Exercício do Temporal](#-iniciando-o-exercício-do-temporal) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Projeto Final](#-projeto-final) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
+**[Referências](#-referências)**
 ---
 
 ## 📋 Pré-requisitos
@@ -122,6 +134,10 @@ Baixe as imagens de Arista cEOS:
 OBS: cEOS-lab-4.34.2F.tar.xz precisa estar no host do laboratório.
 Dica: Transferir por SCP
 
+### Dados de acesso aos equipamento
+- user: admin
+- password: admin
+
 # Criando o container para Arista cEOS
 Importe a imagem do Arista cEOS:
 ```bash
@@ -190,7 +206,7 @@ docker compose up --build -d
 ```
 
 
-## 🧩 Temporal
+## 🧩 Iniciando o Exercício do Temporal
 
 O Temporal será utilizado para orquestração das atividades.
 
@@ -246,3 +262,16 @@ cat /opt/event-driven-automation/projeto_completo/logs/api/fastapi.log
 cat /opt/event-driven-automation/projeto_completo/logs/temporal/worker-device.log
 cat /opt/event-driven-automation/projeto_completo/logs/temporal/worker-interface.log
 ```
+
+
+## 📚 Referências
+
+- [Documentação FastAPI](https://github.com/temporalio/proposals)
+- [Documentação Pyeapi](https://pyeapi.readthedocs.io/en/master/index.html)
+- [Documentação Netbox](https://netboxlabs.com/docs/welcome/)
+- [Documentação FastAPI](https://fastapi.tiangolo.com/)
+- [O que é Temporal](https://docs.temporal.io/temporal)
+- [Tutoriais e cursos do Temporal](https://learn.temporal.io/)
+
+
+

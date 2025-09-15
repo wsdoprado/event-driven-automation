@@ -92,8 +92,8 @@ async def get_device_graphql(device_id: int) -> dict:
         
         # Plataforma associada (ex.: IOS-XR, Arista EOS, etc.)
         platform = None
-        if json_data.get("platform"):
-            platform = json_data["platform"].get("name")
+        if json_data["data"]["device"].get("platform"):
+            platform = json_data["data"]["device"]["platform"].get("name")
         
         return {
             "device_name": device_name,
