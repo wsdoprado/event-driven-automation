@@ -1,3 +1,4 @@
+<div class="title-block" style="text-align: center;" align="center">
 
 
 ![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=http%3A%2F%2Fraw.githubusercontent.com%2Fwsdoprado%2Fevent-driven-automation%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
@@ -18,6 +19,8 @@ Este repositório contém os arquivos e instruções para o laboratório do curs
 **[Exercício do Temporal](#-iniciando-o-exercício-do-temporal) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
 **[Projeto Final](#-projeto-final) &nbsp;&nbsp;&bull;&nbsp;&nbsp;**
 **[Referências](#-referências)**
+
+</div>
 ---
 
 ## 📋 Pré-requisitos
