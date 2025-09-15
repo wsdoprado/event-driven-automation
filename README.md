@@ -252,15 +252,15 @@ Build/Ativar containers
 ```bash
 docker compose up --build -d | docker compose up --build 
 ```
-Parar containers
+Parar todos os containers
 ```bash
-docker stop temporal-worker-interface-1 temporal-api-webhook-1 temporal-worker-device-1 temporal-admin-tools temporal-ui temporal temporal-postgresql 
+docker compose stop 
 ```
-Remover containers
+Subir/Parar um container especifico
 ```bash
-docker rm temporal-worker-interface-1 temporal-api-webhook-1 temporal-worker-device-1 temporal-admin-tools temporal-ui temporal temporal-postgresql -f
+docker compose up --build worker-interface
+docker compose stop worker-interface 
 ```
-
 Verificar Logs em:
 ```bash
 cat /opt/event-driven-automation/projeto_completo/logs/api/fastapi.log
