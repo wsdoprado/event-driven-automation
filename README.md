@@ -271,7 +271,6 @@ cat /opt/event-driven-automation/projeto_completo/logs/temporal/worker-interface
 
 ## 📚 Referências
 
-- [Documentação FastAPI](https://github.com/temporalio/proposals)
 - [Documentação Pyeapi](https://pyeapi.readthedocs.io/en/master/index.html)
 - [Documentação Netbox](https://netboxlabs.com/docs/welcome/)
 - [Documentação FastAPI](https://fastapi.tiangolo.com/)
